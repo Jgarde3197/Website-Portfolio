@@ -3,80 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Web Developer, VA & AI Automation Specialist</title>
-    <meta name="description" content="Professional Portfolio for Web Development, Virtual Assistance, and AI Automation Services.">
-
-    <!-- Open Graph / Social Media Sharing -->
+    <title>Web Developer, VA & AI Automation Specialist Portfolio</title>
+    
+    <!-- SEO & Social Meta -->
+    <meta name="description" content="High-converting websites, AI workflows, and virtual assistance for growing businesses.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://website-portfolio-three-black.vercel.app/">
     <meta property="og:title" content="Web Developer, VA & AI Automation Specialist Portfolio">
     <meta property="og:description" content="High-converting websites, AI workflows, and virtual assistance for growing businesses.">
     <meta property="og:image" content="https://website-portfolio-three-black.vercel.app/preview-image.png">
 
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Web Developer, VA & AI Automation Specialist Portfolio">
-    <meta name="twitter:description" content="High-converting websites, AI workflows, and virtual assistance for growing businesses.">
-    <meta name="twitter:image" content="https://website-portfolio-three-black.vercel.app/preview-image.png">
-
-    <!-- Google Fonts (Inter) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.2">
 </head>
 <body>
 
-    <!-- NAVBAR -->
+    <!-- Header / Navbar -->
     <header class="navbar">
-        <a href="#" class="logo">PORTFOLIO</a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+        <a href="#" class="logo">JG.</a>
+
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu">
             <span></span>
             <span></span>
             <span></span>
         </button>
+
         <nav id="navMenu">
             <a href="#about" class="nav-link">About</a>
             <a href="#services" class="nav-link">Services</a>
             <a href="#projects" class="nav-link">Projects</a>
-            <a href="#booking" class="nav-link">Booking</a>
             <a href="#contact" class="nav-link">Contact</a>
-            <a href="#contact" class="nav-button mobile-only-btn">Let's Talk <i class="fa-solid fa-arrow-right icon-sm"></i></a>
+            
+            <!-- Mobile Social Icons -->
+            <div class="mobile-socials">
+                <a href="https://github.com" target="_blank" aria-label="GitHub">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+
+            <a href="#booking" class="nav-button mobile-only-btn nav-link">Book a Call</a>
         </nav>
-        <a href="#contact" class="nav-button desktop-only-btn">Let's Talk <i class="fa-solid fa-arrow-right icon-sm"></i></a>
+
+        <!-- Desktop Socials & CTA -->
+        <div class="nav-right desktop-only">
+            <div class="social-links">
+                <a href="https://github.com" target="_blank" aria-label="GitHub">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            </div>
+            <a href="#booking" class="nav-button">Book a Call</a>
+        </div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <p class="eyebrow"><i class="fa-solid fa-code"></i> WEB DEVELOPER & AUTOMATION SPECIALIST</p>
+            <p class="eyebrow">&lt;/&gt; WEB DEVELOPER & AUTOMATION SPECIALIST</p>
             <h1>Building Smart Digital Solutions <span>For Growing Businesses</span></h1>
             <p class="hero-description">Specializing in modern web development, virtual support, and AI-driven workflow automations that scale your operations.</p>
             <div class="hero-buttons">
-                <a href="#projects" class="button primary">View Projects <i class="fa-solid fa-briefcase icon-sm"></i></a>
-                <a href="#booking" class="button secondary">Book Call <i class="fa-regular fa-calendar-check icon-sm"></i></a>
+                <a href="#projects" class="button primary">View Projects 💼</a>
+                <a href="#booking" class="button secondary">Book Call 📅</a>
             </div>
         </div>
         <div class="hero-scroll">
             <span>SCROLL</span>
-            <span><i class="fa-solid fa-arrow-down"></i></span>
+            <span>↓</span>
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section class="section about-section" id="about">
+    <!-- About Section -->
+    <section id="about" class="section about-section">
         <div class="about-top">
             <div class="about-label">
                 <span>01 // ABOUT</span>
                 <span>PHILOSOPHY</span>
             </div>
-            <div class="about-intro">
-                Combining full-stack web development with intelligent workflow automation.
-            </div>
+            <p class="about-intro">Combining full-stack web development with intelligent workflow automation.</p>
         </div>
         <div class="about-bottom">
             <div class="about-label">
@@ -84,96 +92,100 @@
             </div>
             <div class="about-text">
                 <p>I help entrepreneurs, creators, and teams eliminate repetitive tasks and establish a strong online presence. By bridging clean, high-converting code with automated back-office systems, I build digital experiences that deliver real business value.</p>
-                <a href="#contact" class="text-link">Work with me <i class="fa-solid fa-arrow-right icon-sm"></i></a>
+                <a href="#contact" class="text-link">Work with me →</a>
             </div>
         </div>
     </section>
 
-    <!-- SERVICES SECTION -->
-    <section class="section services-section" id="services">
+    <!-- Services Section -->
+    <section id="services" class="section services-section">
         <div class="services-header">
-            <h2>Services <span>& Capabilities</span></h2>
-            <p class="services-intro">Tailored digital technical solutions designed to streamline business operations and boost online authority.</p>
+            <h2>02 // <span>SERVICES</span></h2>
+            <p class="services-intro">End-to-end web and automation solutions built to optimize your digital presence and workflow efficiency.</p>
         </div>
         <div class="services-list">
             <div class="service-row">
-                <div class="service-number">01</div>
+                <span class="service-number">01</span>
                 <div class="service-main">
-                    <h3>Web Development <i class="fa-solid fa-laptop-code icon-right"></i></h3>
-                    <p>Responsive, high-performance websites and landing pages built using clean code and modern frontend frameworks.</p>
+                    <h3>Web Development</h3>
+                    <p>Custom, fast, and responsive landing pages and full websites built using modern frameworks focused on user experience and lead conversion.</p>
                 </div>
                 <div class="service-details">
                     <span>HTML/CSS/JS</span>
                     <span>Responsive Design</span>
-                    <span>Landing Pages</span>
+                    <span>SEO Basics</span>
+                    <span>Vercel Hosting</span>
                 </div>
             </div>
             <div class="service-row">
-                <div class="service-number">02</div>
+                <span class="service-number">02</span>
                 <div class="service-main">
-                    <h3>AI & Workflow Automation <i class="fa-solid fa-gears icon-right"></i></h3>
-                    <p>Connecting web tools, CRMs, and email systems with Make.com and AI to eliminate manual data entry and lead management.</p>
+                    <h3>AI & Automation Workflows</h3>
+                    <p>Connecting software applications to eliminate manual data entry, streamline lead processing, and automate client communications.</p>
                 </div>
                 <div class="service-details">
                     <span>Make.com</span>
+                    <span>Zapier</span>
+                    <span>OpenAI API</span>
                     <span>Webhooks</span>
-                    <span>API Integrations</span>
                 </div>
             </div>
             <div class="service-row">
-                <div class="service-number">03</div>
+                <span class="service-number">03</span>
                 <div class="service-main">
-                    <h3>Virtual Assistance & Support <i class="fa-solid fa-headset icon-right"></i></h3>
-                    <p>Technical VA services focusing on website maintenance, system management, data organization, and client onboarding.</p>
+                    <h3>Virtual Assistance & Tech Support</h3>
+                    <p>System maintenance, database management, CRM management, and technical administrative support for busy founders.</p>
                 </div>
                 <div class="service-details">
-                    <span>System Mgmt</span>
-                    <span>Tech VA</span>
-                    <span>CRM Ops</span>
+                    <span>CRM Setup</span>
+                    <span>Data Entry</span>
+                    <span>Email Workflows</span>
+                    <span>System Maintenance</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
-    <section class="section projects-section" id="projects">
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
         <div class="projects-header">
-            <h2>Featured <span>Work</span></h2>
-            <p class="projects-intro">Selected projects highlighting functional web builds, seamless API connections, and automated workflows.</p>
+            <h2>03 // <span>PROJECTS</span></h2>
+            <p class="projects-intro">Selected case studies demonstrating web development and workflow automation builds.</p>
         </div>
         <div class="projects-list">
             <div class="project">
                 <div class="project-top">
-                    <span>PROJECT 01</span>
+                    <span>CASE STUDY</span>
                     <span>WEB & AUTOMATION</span>
                 </div>
                 <div class="project-content">
                     <div class="project-info">
-                        <h3>Automated Client Onboarding System</h3>
-                        <p>A full landing page integrated with Make.com and Google Workspace to automatically capture, process, and follow up with leads in real time.</p>
+                        <h3>Client Acquisition Portal & CRM Sync</h3>
+                        <p>Built a responsive high-converting landing page integrated with a custom webhook that auto-routes leads to Google Sheets, Notion CRM, and triggers email follow-ups instantly.</p>
                         <div class="project-tags">
-                            <span>HTML5/CSS3</span>
+                            <span>Landing Page</span>
                             <span>Make.com</span>
                             <span>Webhooks</span>
+                            <span>Notion API</span>
                         </div>
                     </div>
                     <div class="workflow">
                         <div class="workflow-step">
-                            <span>01 SETUP</span>
-                            <strong>Web Form</strong>
-                            <small>Data capture</small>
+                            <span>STEP 1</span>
+                            <strong>Form Submission</strong>
+                            <small>User enters info</small>
                         </div>
-                        <div class="workflow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                        <span class="workflow-arrow">→</span>
                         <div class="workflow-step">
-                            <span>02 ENGINE</span>
-                            <strong>Make.com</strong>
-                            <small>Processing</small>
+                            <span>STEP 2</span>
+                            <strong>Webhook Trigger</strong>
+                            <small>Data processed</small>
                         </div>
-                        <div class="workflow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                        <span class="workflow-arrow">→</span>
                         <div class="workflow-step">
-                            <span>03 ACTION</span>
-                            <strong>Instant Email</strong>
-                            <small>Auto notification</small>
+                            <span>STEP 3</span>
+                            <strong>CRM Sync</strong>
+                            <small>Notion & Email sent</small>
                         </div>
                     </div>
                 </div>
@@ -181,78 +193,83 @@
         </div>
     </section>
 
-    <!-- BOOKING SECTION -->
-    <section class="section booking-section" id="booking">
+    <!-- Booking Section -->
+    <section id="booking" class="section booking-section">
         <div class="booking-header">
-            <h2>Book a <span>Discovery Call</span></h2>
+            <h2>04 // <span>BOOK A CALL</span></h2>
             <div class="booking-copy">
-                <p>Select a time that works best for you to discuss your project requirements, tech stack, or automation needs.</p>
-                <span>30-MINUTE CONSULTATION</span>
+                <p>Ready to discuss your website or automation project? Pick a time that suits you best.</p>
+                <span>30-MINUTE DISCOVERY CALL</span>
             </div>
         </div>
         <div class="calendar-box">
             <div class="calendar-top">
-                <span>AVAILABILITY</span>
-                <span>SCHEDULE</span>
+                <span>CALENDLY INTEGRATION</span>
+                <span>AVAILABLE SLOTS ONLINE</span>
             </div>
             <div class="calendar-placeholder">
-                <a href="YOUR_CALENDLY_OR_TIDYCAL_LINK" target="_blank" class="calendar-icon">
-                    <span><i class="fa-regular fa-calendar-plus"></i></span>
+                <a href="https://calendly.com" target="_blank" class="calendar-icon">
+                    <span>📅</span>
                 </a>
-                <h3>Ready to discuss your project?</h3>
-                <p>Click below to choose a time slot directly on my calendar.</p>
-                <a href="YOUR_CALENDLY_OR_TIDYCAL_LINK" target="_blank" class="calendar-button">Schedule Meeting <i class="fa-solid fa-arrow-up-right-from-square icon-sm"></i></a>
+                <h3>Schedule a Consultation</h3>
+                <p>Select a convenient date and time to map out your technical requirements.</p>
+                <a href="https://calendly.com" target="_blank" class="calendar-button">Open Scheduler →</a>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section class="section contact-section" id="contact">
-        <div class="contact-left">
-            <div class="section-heading">
-                <h2>Get in <span>Touch</span></h2>
-                <p>Have a question or want to work together? Send a message directly.</p>
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div>
+            <div class="about-label">
+                <span>05 // CONTACT</span>
             </div>
-            <div class="contact-intro">
-                <p><i class="fa-regular fa-envelope"></i> Available for freelance projects, technical virtual assistance, and custom AI automation setups.</p>
+            <p class="contact-intro">Have a project in mind or need ongoing tech support? Send a message directly.</p>
+            
+            <!-- Direct Email Link -->
+            <div class="contact-direct">
+                <a href="mailto:your-email@example.com" class="social-email">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-11.174l4.623 5.462zm1.096 1.071l4.281 5.071 4.281-5.071 5.385 6.071h-19.332l5.385-6.071zm10.658-1.071l4.623-5.462v11.174l-4.623-5.712zm-12.013-6.929h11.272l-5.636 6.671-5.636-6.671z"/></svg>
+                    <span>your-email@example.com</span>
+                </a>
             </div>
         </div>
-        <div class="contact-right">
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Your full name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="service">Service Needed</label>
-                    <select id="service" name="service" required>
-                        <option value="" disabled selected>Select service</option>
-                        <option value="Web Development">Web Development</option>
-                        <option value="AI & Automation">AI & Automation</option>
-                        <option value="Virtual Assistance">Virtual Assistance</option>
-                        <option value="Other">Other / Full Technical Support</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="4" required placeholder="Tell me about your project..."></textarea>
-                </div>
-                <button type="submit" class="button primary">Send Message <i class="fa-solid fa-paper-plane icon-sm"></i></button>
-                <div id="formStatus"></div>
-            </form>
-        </div>
+        <form class="contact-form" id="contactForm">
+            <div class="form-group">
+                <label for="name">NAME</label>
+                <input type="text" id="name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" required placeholder="john@example.com">
+            </div>
+            <div class="form-group">
+                <label for="service">SERVICE NEEDED</label>
+                <select id="service">
+                    <option value="web-dev">Web Development</option>
+                    <option value="automation">AI & Workflow Automation</option>
+                    <option value="va-tech">VA & Tech Support</option>
+                    <option value="full-package">Full Tech Package</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">PROJECT DETAILS</label>
+                <textarea id="message" rows="4" required placeholder="Tell me about your business and goals..."></textarea>
+            </div>
+            <button type="submit" class="button primary">Send Message →</button>
+            <p id="formStatus"></p>
+        </form>
     </section>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Web Developer & Automation Portfolio. All rights reserved.</p>
-        <p>Built with HTML, CSS & JavaScript</p>
+        <p>&copy; 2026 JG. All rights reserved.</p>
+        <div class="footer-socials">
+            <a href="https://github.com" target="_blank" aria-label="GitHub">GitHub</a>
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">LinkedIn</a>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2.2"></script>
 </body>
 </html>
