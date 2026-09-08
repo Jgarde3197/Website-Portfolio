@@ -1,0 +1,954 @@
+/* ==============================
+   RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f5;
+    color: #171717;
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ==============================
+   NAVIGATION
+================================ */
+
+.navbar {
+    width: 100%;
+    padding: 24px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: rgba(247, 247, 245, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    z-index: 101;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.navbar nav a {
+    font-size: 14px;
+    transition: opacity 0.2s ease;
+}
+
+.navbar nav a:hover {
+    opacity: 0.5;
+}
+
+.nav-button {
+    border: 1px solid #171717;
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.mobile-only-btn {
+    display: none;
+}
+
+/* HAMBURGER BUTTON */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 2px;
+    background-color: #171717;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* ==============================
+   HERO
+================================ */
+
+.hero {
+    min-height: 100vh;
+    padding: 180px 7% 100px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: clamp(55px, 8vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -5px;
+    max-width: 950px;
+}
+
+.hero h1 span {
+    display: block;
+    font-weight: 400;
+}
+
+.hero-description {
+    max-width: 550px;
+    margin-top: 35px;
+    font-size: 18px;
+    color: #666;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.hero-scroll {
+    position: absolute;
+    right: 7%;
+    bottom: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #888;
+}
+
+.hero-scroll span:last-child {
+    font-size: 18px;
+}
+
+
+/* ==============================
+   BUTTONS
+================================ */
+
+.button {
+    display: inline-block;
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: 1px solid #171717;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button.primary {
+    background: #171717;
+    color: white;
+}
+
+.button.primary:hover {
+    opacity: 0.8;
+}
+
+.button.secondary:hover {
+    background: #171717;
+    color: white;
+}
+
+
+/* ==============================
+   SECTIONS
+================================ */
+
+.section {
+    padding: 130px 7%;
+}
+
+.section-heading {
+    margin-bottom: 70px;
+}
+
+.section-heading h2 {
+    font-size: clamp(42px, 6vw, 75px);
+    line-height: 1;
+    letter-spacing: -3px;
+}
+
+.section-heading > p:last-child {
+    margin-top: 20px;
+    max-width: 500px;
+    color: #666;
+}
+
+
+/* ==============================
+   ABOUT SECTION
+================================ */
+
+.about-section {
+    border-top: 1px solid #ddd;
+}
+
+.about-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    margin-bottom: 120px;
+}
+
+.about-intro {
+    font-size: clamp(32px, 4vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    max-width: 900px;
+}
+
+.about-bottom {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+}
+
+.about-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #888;
+}
+
+.about-label span:first-child {
+    color: #171717;
+    font-size: 14px;
+}
+
+.about-text {
+    max-width: 700px;
+}
+
+.about-text p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.text-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #171717;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   SERVICES SECTION
+================================ */
+
+.services-section {
+    border-top: 1px solid #ddd;
+}
+
+.services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 90px;
+}
+
+.services-header h2 {
+    font-size: clamp(50px, 7vw, 90px);
+    line-height: 0.95;
+    letter-spacing: -4px;
+}
+
+.services-intro {
+    max-width: 500px;
+    font-size: 19px;
+    line-height: 1.5;
+    color: #666;
+    padding-bottom: 5px;
+}
+
+.services-list {
+    border-top: 1px solid #bbb;
+}
+
+.service-row {
+    display: grid;
+    grid-template-columns: 80px 1.5fr 1fr;
+    gap: 50px;
+    padding: 45px 0;
+    border-bottom: 1px solid #bbb;
+    transition: padding 0.3s ease;
+}
+
+.service-row:hover {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.service-number {
+    font-size: 12px;
+    color: #888;
+    padding-top: 5px;
+}
+
+.service-main h3 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -1px;
+}
+
+.service-main p {
+    margin-top: 14px;
+    max-width: 560px;
+    color: #666;
+    font-size: 16px;
+}
+
+.service-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+}
+
+.service-details span {
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 7px 12px;
+    font-size: 11px;
+    color: #666;
+}
+
+
+/* ==============================
+   PROJECTS SECTION
+================================ */
+
+.projects-section {
+    border-top: 1px solid #ddd;
+}
+
+.projects-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 90px;
+}
+
+.projects-header h2 {
+    font-size: clamp(50px, 7vw, 90px);
+    line-height: 0.95;
+    letter-spacing: -4px;
+}
+
+.projects-intro {
+    max-width: 500px;
+    font-size: 19px;
+    line-height: 1.5;
+    color: #666;
+}
+
+.projects-list {
+    border-top: 1px solid #bbb;
+}
+
+.project {
+    padding: 45px 0 60px;
+    border-bottom: 1px solid #bbb;
+}
+
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #888;
+}
+
+.project-content {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    margin-top: 55px;
+}
+
+.project-info h3 {
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: -1.5px;
+}
+
+.project-info p {
+    max-width: 520px;
+    margin-top: 18px;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.project-tags span {
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 7px 12px;
+    font-size: 10px;
+    color: #666;
+}
+
+.workflow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    align-self: center;
+}
+
+.workflow-step {
+    min-width: 105px;
+    padding: 18px 14px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+}
+
+.workflow-step span {
+    font-size: 9px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.workflow-step strong {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.workflow-step small {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.workflow-arrow {
+    color: #999;
+    font-size: 18px;
+}
+
+
+/* ==============================
+   BOOKING SECTION
+================================ */
+
+.booking-section {
+    background: #171717;
+    color: #fff;
+}
+
+.booking-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 90px;
+}
+
+.booking-header h2 {
+    font-size: clamp(50px, 7vw, 90px);
+    line-height: 0.95;
+    letter-spacing: -4px;
+}
+
+.booking-copy {
+    max-width: 500px;
+}
+
+.booking-copy p {
+    color: #aaa;
+    font-size: 19px;
+    line-height: 1.5;
+}
+
+.booking-copy span {
+    display: block;
+    margin-top: 30px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #777;
+}
+
+.calendar-box {
+    border: 1px solid #444;
+}
+
+.calendar-top {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 25px;
+    border-bottom: 1px solid #444;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #777;
+}
+
+.calendar-placeholder {
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.calendar-icon {
+    width: 55px;
+    height: 55px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calendar-icon:hover {
+    border-color: #888;
+    transform: scale(1.05);
+}
+
+.calendar-icon span {
+    font-size: 24px;
+    font-weight: 300;
+    color: #aaa;
+}
+
+.calendar-placeholder h3 {
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.calendar-placeholder p {
+    margin-top: 10px;
+    color: #777;
+}
+
+.calendar-button {
+    margin-top: 30px;
+    border: 1px solid #777;
+    background: transparent;
+    color: white;
+    padding: 13px 24px;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.calendar-button:hover {
+    background: white;
+    color: #171717;
+    border-color: #888;
+    transform: scale(1.05);
+}
+
+
+/* ==============================
+   CONTACT
+================================ */
+
+.contact-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+}
+
+.contact-intro {
+    margin-top: 35px;
+    max-width: 380px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #666;
+}
+
+.contact-form {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    background: transparent;
+    padding: 14px 0;
+    font-family: inherit;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #171717;
+}
+
+#formStatus {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   FOOTER
+================================ */
+
+footer {
+    padding: 50px 7%;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+footer p {
+    color: #777;
+    margin-top: 5px;
+}
+
+
+/* ==============================
+   MOBILE RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+
+    .desktop-only-btn {
+        display: none;
+    }
+
+    .mobile-only-btn {
+        display: block;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .navbar {
+        padding: 20px 5%;
+    }
+
+    /* FULLSCREEN MOBILE NAV MENU */
+    .navbar nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: #f7f7f5;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 28px;
+        transition: right 0.3s ease-in-out;
+        z-index: 100;
+        padding: 0 10%;
+    }
+
+    .navbar nav.active {
+        right: 0;
+    }
+
+    .navbar nav a {
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .hero {
+        padding: 150px 5% 80px;
+        min-height: 100vh;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-scroll {
+        right: 25px;
+        bottom: 35px;
+    }
+
+    .section {
+        padding: 75px 5%;
+    }
+
+    .about-top,
+    .about-bottom {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .about-top {
+        margin-bottom: 70px;
+    }
+
+    .about-intro {
+        font-size: 34px;
+        letter-spacing: -1px;
+    }
+
+    .about-text p {
+        font-size: 18px;
+    }
+
+    .services-header,
+    .projects-header,
+    .booking-header,
+    .contact-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .services-header {
+        margin-bottom: 60px;
+    }
+
+    .services-header h2,
+    .projects-header h2,
+    .booking-header h2 {
+        font-size: 55px;
+        letter-spacing: -2px;
+    }
+
+    .services-intro,
+    .projects-intro,
+    .booking-copy p {
+        font-size: 17px;
+    }
+
+    .service-row {
+        grid-template-columns: 40px 1fr;
+        gap: 20px;
+        padding: 35px 0;
+    }
+
+    .service-main h3 {
+        font-size: 23px;
+    }
+
+    .service-details {
+        grid-column: 2;
+    }
+
+    .project-content {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        margin-top: 40px;
+    }
+
+    .project-info h3 {
+        font-size: 28px;
+    }
+
+    .workflow {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .workflow-arrow {
+        display: none;
+    }
+
+    .workflow-step {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .project-top {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .calendar-placeholder {
+        min-height: 400px;
+        padding: 30px;
+    }
+
+    .contact-section {
+        gap: 50px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+}
+/* ==============================================
+   TYPOGRAPHY & DESIGN ENHANCEMENTS
+================================================ */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle Gradient Text Effect for Main Headlines */
+.hero h1 span,
+.section-heading h2 {
+    background: linear-gradient(135deg, #171717 0%, #4a4a4a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Navbar Enhancement */
+.navbar {
+    background: rgba(247, 247, 245, 0.85) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Smooth Button Hover & Subtle Gradient Accent */
+.button, 
+.nav-button, 
+.calendar-button {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.button.primary {
+    background: linear-gradient(135deg, #171717 0%, #2c2c2c 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    opacity: 1 !important;
+}
+
+.button.secondary:hover {
+    transform: translateY(-2px);
+}
+
+/* Modern Card Hover Elevation (Services & Projects) */
+.service-row, 
+.project {
+    transition: background-color 0.25s ease, transform 0.25s ease !important;
+}
+
+.service-row:hover, 
+.project:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Subtle Glowing Dark Mode Accent for Booking Section */
+.booking-section {
+    background: #121212 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+}
