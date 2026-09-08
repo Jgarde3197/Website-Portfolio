@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | VA & AI Automation Specialist</title>
+    <title>Portfolio | Web Developer, VA & AI Automation Specialist</title>
     <meta name="description" content="Professional Portfolio for Web Development, Virtual Assistance, and AI Automation Services.">
 
-    <!-- Open Graph / Social Media Sharing (Facebook, LinkedIn, DMs) -->
+    <!-- Open Graph / Social Media Sharing -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourwebsite.vercel.app/">
+    <meta property="og:url" content="https://website-portfolio-three-black.vercel.app/">
     <meta property="og:title" content="Web Developer, VA & AI Automation Specialist Portfolio">
     <meta property="og:description" content="High-converting websites, AI workflows, and virtual assistance for growing businesses.">
-    <meta property="og:image" content="https://yourwebsite.vercel.app/preview-image.jpg">
+    <meta property="og:image" content="https://website-portfolio-three-black.vercel.app/preview-image.png">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Web Developer, VA & AI Automation Specialist Portfolio">
     <meta name="twitter:description" content="High-converting websites, AI workflows, and virtual assistance for growing businesses.">
-    <meta name="twitter:image" content="https://yourwebsite.vercel.app/preview-image.jpg">
+    <meta name="twitter:image" content="https://website-portfolio-three-black.vercel.app/preview-image.png">
 
-    <!-- Google Fonts (Inter Font for Modern Typography) -->
+    <!-- Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,635 +29,230 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- NAVIGATION -->
+    <!-- NAVBAR -->
     <header class="navbar">
-        <a href="#" class="logo">JG.</a>
-
-        <nav id="navMenu">
-            <a href="#about" class="nav-link">About</a>
-            <a href="#services" class="nav-link">Services</a>
-            <a href="#projects" class="nav-link">Projects</a>
-            <a href="#contact" class="nav-link">Contact</a>
-            <a href="#booking" class="nav-button mobile-only-btn">Let's Talk</a>
-        </nav>
-
-        <a href="#booking" class="nav-button desktop-only-btn">Let's Talk</a>
-
-        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <a href="#" class="logo">PORTFOLIO</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
             <span></span>
             <span></span>
             <span></span>
         </button>
+        <nav id="navMenu">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#booking" class="nav-link">Booking</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#contact" class="nav-button mobile-only-btn">Let's Talk <i class="fa-solid fa-arrow-right icon-sm"></i></a>
+        </nav>
+        <a href="#contact" class="nav-button desktop-only-btn">Let's Talk <i class="fa-solid fa-arrow-right icon-sm"></i></a>
     </header>
 
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow"><i class="fa-solid fa-code"></i> WEB DEVELOPER & AUTOMATION SPECIALIST</p>
+            <h1>Building Smart Digital Solutions <span>For Growing Businesses</span></h1>
+            <p class="hero-description">Specializing in modern web development, virtual support, and AI-driven workflow automations that scale your operations.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="button primary">View Projects <i class="fa-solid fa-briefcase icon-sm"></i></a>
+                <a href="#booking" class="button secondary">Book Call <i class="fa-regular fa-calendar-check icon-sm"></i></a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>SCROLL</span>
+            <span><i class="fa-solid fa-arrow-down"></i></span>
+        </div>
+    </section>
 
-    <!-- HERO -->
-    <main>
+    <!-- ABOUT SECTION -->
+    <section class="section about-section" id="about">
+        <div class="about-top">
+            <div class="about-label">
+                <span>01 // ABOUT</span>
+                <span>PHILOSOPHY</span>
+            </div>
+            <div class="about-intro">
+                Combining full-stack web development with intelligent workflow automation.
+            </div>
+        </div>
+        <div class="about-bottom">
+            <div class="about-label">
+                <span>APPROACH</span>
+            </div>
+            <div class="about-text">
+                <p>I help entrepreneurs, creators, and teams eliminate repetitive tasks and establish a strong online presence. By bridging clean, high-converting code with automated back-office systems, I build digital experiences that deliver real business value.</p>
+                <a href="#contact" class="text-link">Work with me <i class="fa-solid fa-arrow-right icon-sm"></i></a>
+            </div>
+        </div>
+    </section>
 
-        <section class="hero">
-
-            <div class="hero-content">
-
-                <p class="eyebrow">VIRTUAL ASSISTANT • AI AUTOMATION</p>
-
-                <h1>
-                    I make work
-                    <span>simpler.</span>
-                </h1>
-
-                <p class="hero-description">
-                    Virtual assistance and automation support that helps
-                    businesses stay organized, save time, and work more efficiently.
-                </p>
-
-                <div class="hero-buttons">
-                    <a href="#projects" class="button primary">
-                        View My Work
-                    </a>
-
-                    <a href="#contact" class="button secondary">
-                        Let's Connect
-                    </a>
+    <!-- SERVICES SECTION -->
+    <section class="section services-section" id="services">
+        <div class="services-header">
+            <h2>Services <span>& Capabilities</span></h2>
+            <p class="services-intro">Tailored digital technical solutions designed to streamline business operations and boost online authority.</p>
+        </div>
+        <div class="services-list">
+            <div class="service-row">
+                <div class="service-number">01</div>
+                <div class="service-main">
+                    <h3>Web Development <i class="fa-solid fa-laptop-code icon-right"></i></h3>
+                    <p>Responsive, high-performance websites and landing pages built using clean code and modern frontend frameworks.</p>
                 </div>
-
-            </div>
-
-            <div class="hero-scroll">
-                <span>SCROLL TO EXPLORE</span>
-                <span>↓</span>
-            </div>
-
-        </section>
-
-
-        <!-- ABOUT -->
-        <section id="about" class="section about-section">
-
-            <div class="about-top">
-                <p class="eyebrow">ABOUT ME</p>
-
-                <p class="about-intro">
-                    I help businesses stay organized, reduce repetitive work,
-                    and create smoother day-to-day operations.
-                </p>
-            </div>
-
-            <div class="about-bottom">
-
-                <div class="about-label">
-                    <span>01</span>
-                    <span>WHO I AM</span>
+                <div class="service-details">
+                    <span>HTML/CSS/JS</span>
+                    <span>Responsive Design</span>
+                    <span>Landing Pages</span>
                 </div>
-
-                <div class="about-text">
-
-                    <p>
-                        I'm a Virtual Assistant with experience in administrative
-                        support, customer service, database management, and
-                        property management operations.
-                    </p>
-
-                    <p>
-                        I'm also developing my expertise in AI automation and
-                        workflow optimization, combining reliable administrative
-                        support with smarter digital processes.
-                    </p>
-
-                    <a href="#services" class="text-link">
-                        Explore my services →
-                    </a>
-
+            </div>
+            <div class="service-row">
+                <div class="service-number">02</div>
+                <div class="service-main">
+                    <h3>AI & Workflow Automation <i class="fa-solid fa-gears icon-right"></i></h3>
+                    <p>Connecting web tools, CRMs, and email systems with Make.com and AI to eliminate manual data entry and lead management.</p>
                 </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SERVICES -->
-        <section id="services" class="section services-section">
-
-            <div class="services-header">
-
-                <div>
-                    <p class="eyebrow">WHAT I CAN DO</p>
-                    <h2>Services</h2>
+                <div class="service-details">
+                    <span>Make.com</span>
+                    <span>Webhooks</span>
+                    <span>API Integrations</span>
                 </div>
-
-                <p class="services-intro">
-                    Practical support for the tasks that keep your
-                    business moving — from daily operations to automation.
-                </p>
-
             </div>
-
-
-            <div class="services-list">
-
-                <!-- SERVICE 01 -->
-                <article class="service-row">
-
-                    <div class="service-number">01</div>
-
-                    <div class="service-main">
-                        <h3>Administrative Support</h3>
-
-                        <p>
-                            Keep your daily operations organized with reliable
-                            administrative support and accurate documentation.
-                        </p>
-                    </div>
-
-                    <div class="service-details">
-                        <span>Data Entry</span>
-                        <span>Documentation</span>
-                        <span>Scheduling</span>
-                        <span>Reports</span>
-                    </div>
-
-                </article>
-
-
-                <!-- SERVICE 02 -->
-                <article class="service-row">
-
-                    <div class="service-number">02</div>
-
-                    <div class="service-main">
-                        <h3>Customer Support</h3>
-
-                        <p>
-                            Provide professional and responsive support that
-                            keeps customers informed and taken care of.
-                        </p>
-                    </div>
-
-                    <div class="service-details">
-                        <span>Email</span>
-                        <span>Live Chat</span>
-                        <span>Customer Service</span>
-                        <span>Communication</span>
-                    </div>
-
-                </article>
-
-
-                <!-- SERVICE 03 -->
-                <article class="service-row">
-
-                    <div class="service-number">03</div>
-
-                    <div class="service-main">
-                        <h3>AI & Workflow Automation</h3>
-
-                        <p>
-                            Reduce repetitive tasks by connecting tools,
-                            automating workflows, and creating efficient processes.
-                        </p>
-                    </div>
-
-                    <div class="service-details">
-                        <span>Make</span>
-                        <span>Webhooks</span>
-                        <span>AI</span>
-                        <span>API</span>
-                    </div>
-
-                </article>
-
-
-                <!-- SERVICE 04 -->
-                <article class="service-row">
-
-                    <div class="service-number">04</div>
-
-                    <div class="service-main">
-                        <h3>Database & CRM Management</h3>
-
-                        <p>
-                            Keep customer and business information organized,
-                            accurate, and easy to manage.
-                        </p>
-                    </div>
-
-                    <div class="service-details">
-                        <span>Google Sheets</span>
-                        <span>CRM</span>
-                        <span>Data Management</span>
-                        <span>Organization</span>
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- PROJECTS -->
-        <section id="projects" class="section projects-section">
-
-            <div class="projects-header">
-
-                <div>
-                    <p class="eyebrow">SELECTED WORK</p>
-                    <h2>Projects</h2>
+            <div class="service-row">
+                <div class="service-number">03</div>
+                <div class="service-main">
+                    <h3>Virtual Assistance & Support <i class="fa-solid fa-headset icon-right"></i></h3>
+                    <p>Technical VA services focusing on website maintenance, system management, data organization, and client onboarding.</p>
                 </div>
-
-                <p class="projects-intro">
-                    A selection of workflow and automation projects
-                    built to solve practical business problems.
-                </p>
-
+                <div class="service-details">
+                    <span>System Mgmt</span>
+                    <span>Tech VA</span>
+                    <span>CRM Ops</span>
+                </div>
             </div>
+        </div>
+    </section>
 
-
-            <div class="projects-list">
-
-                <!-- PROJECT 01 -->
-                <article class="project">
-
-                    <div class="project-top">
-                        <span>01 / AUTOMATION DEMO</span>
-                        <span>MAKE • WEBHOOK</span>
-                    </div>
-
-                    <div class="project-content">
-
-                        <div class="project-info">
-
-                            <h3>Lead Capture Automation</h3>
-
-                            <p>
-                                A simple lead capture workflow that automatically
-                                receives information from a website form,
-                                stores it in Google Sheets, and sends notifications.
-                            </p>
-
-                            <div class="project-tags">
-                                <span>Webhook</span>
-                                <span>Make</span>
-                                <span>Google Sheets</span>
-                                <span>Email</span>
-                            </div>
-
+    <!-- PROJECTS SECTION -->
+    <section class="section projects-section" id="projects">
+        <div class="projects-header">
+            <h2>Featured <span>Work</span></h2>
+            <p class="projects-intro">Selected projects highlighting functional web builds, seamless API connections, and automated workflows.</p>
+        </div>
+        <div class="projects-list">
+            <div class="project">
+                <div class="project-top">
+                    <span>PROJECT 01</span>
+                    <span>WEB & AUTOMATION</span>
+                </div>
+                <div class="project-content">
+                    <div class="project-info">
+                        <h3>Automated Client Onboarding System</h3>
+                        <p>A full landing page integrated with Make.com and Google Workspace to automatically capture, process, and follow up with leads in real time.</p>
+                        <div class="project-tags">
+                            <span>HTML5/CSS3</span>
+                            <span>Make.com</span>
+                            <span>Webhooks</span>
                         </div>
-
-
-                        <div class="workflow">
-
-                            <div class="workflow-step">
-                                <span>01</span>
-                                <strong>Form</strong>
-                                <small>New Lead</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>02</span>
-                                <strong>Webhook</strong>
-                                <small>Receive Data</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>03</span>
-                                <strong>Google Sheets</strong>
-                                <small>Save Data</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>04</span>
-                                <strong>Email</strong>
-                                <small>Notify</small>
-                            </div>
-
-                        </div>
-
                     </div>
-
-                </article>
-
-
-                <!-- PROJECT 02 -->
-                <article class="project">
-
-                    <div class="project-top">
-                        <span>02 / AUTOMATION DEMO</span>
-                        <span>MAKE • GOOGLE SHEETS</span>
-                    </div>
-
-                    <div class="project-content">
-
-                        <div class="project-info">
-
-                            <h3>Order Processing Workflow</h3>
-
-                            <p>
-                                An automated order workflow that captures customer
-                                information, organizes order data, and triggers
-                                notifications and confirmation emails.
-                            </p>
-
-                            <div class="project-tags">
-                                <span>Automation</span>
-                                <span>Google Sheets</span>
-                                <span>Email</span>
-                                <span>Data Processing</span>
-                            </div>
-
+                    <div class="workflow">
+                        <div class="workflow-step">
+                            <span>01 SETUP</span>
+                            <strong>Web Form</strong>
+                            <small>Data capture</small>
                         </div>
-
-
-                        <div class="workflow">
-
-                            <div class="workflow-step">
-                                <span>01</span>
-                                <strong>New Order</strong>
-                                <small>Order Received</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>02</span>
-                                <strong>Process</strong>
-                                <small>Organize Data</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>03</span>
-                                <strong>Database</strong>
-                                <small>Store Order</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>04</span>
-                                <strong>Notification</strong>
-                                <small>Alert Owner</small>
-                            </div>
-
+                        <div class="workflow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                        <div class="workflow-step">
+                            <span>02 ENGINE</span>
+                            <strong>Make.com</strong>
+                            <small>Processing</small>
                         </div>
-
-                    </div>
-
-                </article>
-
-
-                <!-- PROJECT 03 -->
-                <article class="project">
-
-                    <div class="project-top">
-                        <span>03 / AI AUTOMATION DEMO</span>
-                        <span>AI • MAKE</span>
-                    </div>
-
-                    <div class="project-content">
-
-                        <div class="project-info">
-
-                            <h3>AI-Assisted Workflow</h3>
-
-                            <p>
-                                A workflow designed to use AI for processing
-                                incoming information and producing structured
-                                outputs that can be used in business processes.
-                            </p>
-
-                            <div class="project-tags">
-                                <span>AI</span>
-                                <span>Make</span>
-                                <span>Automation</span>
-                                <span>API</span>
-                            </div>
-
+                        <div class="workflow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                        <div class="workflow-step">
+                            <span>03 ACTION</span>
+                            <strong>Instant Email</strong>
+                            <small>Auto notification</small>
                         </div>
-
-
-                        <div class="workflow">
-
-                            <div class="workflow-step">
-                                <span>01</span>
-                                <strong>Input</strong>
-                                <small>Information</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>02</span>
-                                <strong>AI</strong>
-                                <small>Process</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>03</span>
-                                <strong>Automation</strong>
-                                <small>Route Data</small>
-                            </div>
-
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step">
-                                <span>04</span>
-                                <strong>Output</strong>
-                                <small>Final Result</small>
-                            </div>
-
-                        </div>
-
                     </div>
-
-                </article>
-
+                </div>
             </div>
+        </div>
+    </section>
 
-        </section>
-
-
-        <!-- BOOKING -->
-        <section id="booking" class="section booking-section">
-
-            <div class="booking-header">
-
-                <div>
-                    <p class="eyebrow">LET'S CONNECT</p>
-
-                    <h2>
-                        Let's find a<br>
-                        time to talk.
-                    </h2>
-                </div>
-
-                <div class="booking-copy">
-                    <p>
-                        Have a project, workflow, or task you'd like
-                        to discuss? Book a quick call at a time that
-                        works for you.
-                    </p>
-
-                    <span>30 MINUTE DISCOVERY CALL</span>
-                </div>
-
+    <!-- BOOKING SECTION -->
+    <section class="section booking-section" id="booking">
+        <div class="booking-header">
+            <h2>Book a <span>Discovery Call</span></h2>
+            <div class="booking-copy">
+                <p>Select a time that works best for you to discuss your project requirements, tech stack, or automation needs.</p>
+                <span>30-MINUTE CONSULTATION</span>
             </div>
-
-
-            <div class="calendar-box">
-
-                <div class="calendar-top">
-                    <span>AVAILABLE TIMES</span>
-                    <span>GOOGLE CALENDAR</span>
-                </div>
-
-                <div class="calendar-placeholder">
-
-                    <a
-                        href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3UMazeIW1yIy5vdzWaHQ3j7v89hS4xE8mdgHL5jOEgToK1U_5ziIFhfraCMIA6ncWlqfkM32Gt"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="calendar-icon"
-                    >
-                        <span>+</span>
-                    </a>
-
-                    <h3>Book a discovery call</h3>
-
-                    <p>
-                        Choose a date and time that works best for you.
-                    </p>
-
-                    <a
-                        href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3UMazeIW1yIy5vdzWaHQ3j7v89hS4xE8mdgHL5jOEgToK1U_5ziIFhfraCMIA6ncWlqfkM32Gt"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="calendar-button"
-                    >
-                        Open Calendar
-                    </a>
-
-                </div>
-
+        </div>
+        <div class="calendar-box">
+            <div class="calendar-top">
+                <span>AVAILABILITY</span>
+                <span>SCHEDULE</span>
             </div>
+            <div class="calendar-placeholder">
+                <a href="YOUR_CALENDLY_OR_TIDYCAL_LINK" target="_blank" class="calendar-icon">
+                    <span><i class="fa-regular fa-calendar-plus"></i></span>
+                </a>
+                <h3>Ready to discuss your project?</h3>
+                <p>Click below to choose a time slot directly on my calendar.</p>
+                <a href="YOUR_CALENDLY_OR_TIDYCAL_LINK" target="_blank" class="calendar-button">Schedule Meeting <i class="fa-solid fa-arrow-up-right-from-square icon-sm"></i></a>
+            </div>
+        </div>
+    </section>
 
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="section contact-section">
-
+    <!-- CONTACT SECTION -->
+    <section class="section contact-section" id="contact">
+        <div class="contact-left">
             <div class="section-heading">
-                <p class="eyebrow">CONTACT</p>
-                <h2>Let's work together.</h2>
-                <p class="contact-intro">
-                    Have a project, task, or workflow you'd like to discuss?
-                    Send me a message and I'll get back to you soon.
-                </p>
+                <h2>Get in <span>Touch</span></h2>
+                <p>Have a question or want to work together? Send a message directly.</p>
             </div>
-
-
-            <form id="contactForm" class="contact-form">
-
+            <div class="contact-intro">
+                <p><i class="fa-regular fa-envelope"></i> Available for freelance projects, technical virtual assistance, and custom AI automation setups.</p>
+            </div>
+        </div>
+        <div class="contact-right">
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Your name"
-                        required
-                    >
+                    <input type="text" id="name" name="name" required placeholder="Your full name">
                 </div>
-
-
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="you@example.com"
-                        required
-                    >
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
                 </div>
-
-
                 <div class="form-group">
-                    <label for="service">Service</label>
-
+                    <label for="service">Service Needed</label>
                     <select id="service" name="service" required>
-                        <option value="">Select a service</option>
-                        <option value="Administrative Support">
-                            Administrative Support
-                        </option>
-
-                        <option value="Customer Support">
-                            Customer Support
-                        </option>
-
-                        <option value="AI Automation">
-                            AI Automation
-                        </option>
-
-                        <option value="Database & CRM">
-                            Database & CRM
-                        </option>
+                        <option value="" disabled selected>Select service</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="AI & Automation">AI & Automation</option>
+                        <option value="Virtual Assistance">Virtual Assistance</option>
+                        <option value="Other">Other / Full Technical Support</option>
                     </select>
-
                 </div>
-
-
                 <div class="form-group">
                     <label for="message">Message</label>
-
-                    <textarea
-                        id="message"
-                        name="message"
-                        rows="6"
-                        placeholder="Tell me about your project..."
-                        required
-                    ></textarea>
+                    <textarea id="message" name="message" rows="4" required placeholder="Tell me about your project..."></textarea>
                 </div>
-
-
-                <button type="submit" class="button primary">
-                    Send Message
-                </button>
-
-                <p id="formStatus"></p>
-
+                <button type="submit" class="button primary">Send Message <i class="fa-solid fa-paper-plane icon-sm"></i></button>
+                <div id="formStatus"></div>
             </form>
-
-        </section>
-
-    </main>
-
+        </div>
+    </section>
 
     <!-- FOOTER -->
     <footer>
-
-        <div>
-            <strong>JG.</strong>
-            <p>Virtual Assistant • AI Automation</p>
-        </div>
-
-        <p>© 2026 Jefferson Garde</p>
-
+        <p>&copy; 2026 Web Developer & Automation Portfolio. All rights reserved.</p>
+        <p>Built with HTML, CSS & JavaScript</p>
     </footer>
 
-
     <script src="script.js"></script>
-
 </body>
 </html>
