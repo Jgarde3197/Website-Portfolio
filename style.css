@@ -14,8 +14,8 @@ html {
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-    background: #f7f7f5;
-    color: #171717;
+    background: #090d16;
+    color: #e2e8f0;
     line-height: 1.5;
     letter-spacing: -0.011em;
     -webkit-font-smoothing: antialiased;
@@ -34,7 +34,7 @@ a {
 .icon-right {
     font-size: 14px;
     margin-left: 6px;
-    color: #888;
+    color: #94a3b8;
 }
 
 
@@ -52,10 +52,10 @@ a {
     top: 0;
     left: 0;
     z-index: 100;
-    background: rgba(247, 247, 245, 0.85);
+    background: rgba(9, 13, 22, 0.85);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logo {
@@ -63,6 +63,7 @@ a {
     font-weight: 700;
     letter-spacing: -1px;
     z-index: 101;
+    color: #ffffff;
 }
 
 .navbar nav {
@@ -74,27 +75,29 @@ a {
 .navbar nav a {
     font-size: 14px;
     font-weight: 500;
-    color: #444;
-    transition: opacity 0.2s ease, color 0.2s ease;
+    color: #94a3b8;
+    transition: color 0.2s ease;
 }
 
 .navbar nav a:hover {
-    color: #171717;
+    color: #ffffff;
 }
 
 .nav-button {
-    border: 1px solid #171717;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 8px 18px;
     border-radius: 50px;
     font-size: 13px;
     font-weight: 500;
     text-align: center;
+    color: #ffffff;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-button:hover {
-    background: #171717;
-    color: #fff !important;
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff !important;
 }
 
 .mobile-only-btn {
@@ -117,7 +120,7 @@ a {
 .hamburger span {
     width: 100%;
     height: 2px;
-    background-color: #171717;
+    background-color: #ffffff;
     transition: all 0.3s ease;
 }
 
@@ -144,6 +147,7 @@ a {
     display: flex;
     align-items: center;
     position: relative;
+    background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
 }
 
 .hero-content {
@@ -155,7 +159,7 @@ a {
     font-weight: 700;
     letter-spacing: 2px;
     margin-bottom: 16px;
-    color: #666;
+    color: #38bdf8;
 }
 
 .hero h1 {
@@ -163,13 +167,15 @@ a {
     line-height: 0.98;
     letter-spacing: -3px;
     font-weight: 700;
+    color: #ffffff;
 }
 
 .hero h1 span {
     display: block;
     font-weight: 400;
-    background: linear-gradient(135deg, #171717 0%, #666666 100%);
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -177,7 +183,7 @@ a {
     max-width: 520px;
     margin-top: 20px;
     font-size: 17px;
-    color: #555;
+    color: #94a3b8;
     line-height: 1.5;
 }
 
@@ -197,7 +203,7 @@ a {
     gap: 4px;
     font-size: 10px;
     letter-spacing: 2px;
-    color: #888;
+    color: #64748b;
 }
 
 .hero-scroll span:last-child {
@@ -215,7 +221,7 @@ a {
     justify-content: center;
     padding: 10px 22px;
     border-radius: 50px;
-    border: 1px solid #171717;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
@@ -223,24 +229,24 @@ a {
 }
 
 .button.primary {
-    background: linear-gradient(135deg, #171717 0%, #2c2c2c 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .button.primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
 }
 
 .button.secondary {
-    background: transparent;
-    color: #171717;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
 }
 
 .button.secondary:hover {
-    background: #171717;
-    color: white;
+    background: rgba(255, 255, 255, 0.12);
     transform: translateY(-2px);
 }
 
@@ -257,18 +263,20 @@ a {
     font-size: clamp(32px, 4.5vw, 52px);
     line-height: 1;
     letter-spacing: -2px;
+    color: #ffffff;
 }
 
 .section-heading h2 span {
-    background: linear-gradient(135deg, #171717 0%, #666666 100%);
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .section-heading > p:last-child {
     margin-top: 10px;
     max-width: 500px;
-    color: #666;
+    color: #94a3b8;
 }
 
 
@@ -277,7 +285,7 @@ a {
 ================================ */
 
 .about-section {
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .about-top {
@@ -293,6 +301,7 @@ a {
     letter-spacing: -1.5px;
     font-weight: 500;
     max-width: 900px;
+    color: #f1f5f9;
 }
 
 .about-bottom {
@@ -307,11 +316,11 @@ a {
     gap: 4px;
     font-size: 11px;
     letter-spacing: 2px;
-    color: #888;
+    color: #64748b;
 }
 
 .about-label span:first-child {
-    color: #171717;
+    color: #ffffff;
     font-size: 12px;
     font-weight: 600;
 }
@@ -323,7 +332,7 @@ a {
 .about-text p {
     font-size: 16px;
     line-height: 1.5;
-    color: #555;
+    color: #94a3b8;
     margin-bottom: 12px;
 }
 
@@ -332,9 +341,10 @@ a {
     align-items: center;
     margin-top: 6px;
     padding-bottom: 2px;
-    border-bottom: 1px solid #171717;
+    border-bottom: 1px solid #38bdf8;
     font-size: 13px;
     font-weight: 600;
+    color: #38bdf8;
 }
 
 
@@ -343,7 +353,7 @@ a {
 ================================ */
 
 .services-section {
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .services-header {
@@ -358,22 +368,24 @@ a {
     font-size: clamp(32px, 5vw, 56px);
     line-height: 0.95;
     letter-spacing: -2px;
+    color: #ffffff;
 }
 
 .services-header h2 span {
-    background: linear-gradient(135deg, #171717 0%, #666666 100%);
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .services-intro {
     max-width: 500px;
     font-size: 15px;
-    color: #666;
+    color: #94a3b8;
 }
 
 .services-list {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .service-row {
@@ -381,18 +393,18 @@ a {
     grid-template-columns: 60px 1.5fr 1fr;
     gap: 20px;
     padding: 24px 12px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
 .service-row:hover {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
 .service-number {
     font-size: 12px;
-    color: #888;
+    color: #38bdf8;
     padding-top: 4px;
     font-weight: 600;
 }
@@ -401,12 +413,13 @@ a {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.5px;
+    color: #ffffff;
 }
 
 .service-main p {
     margin-top: 6px;
     max-width: 560px;
-    color: #666;
+    color: #94a3b8;
     font-size: 14px;
 }
 
@@ -418,12 +431,12 @@ a {
 }
 
 .service-details span {
-    border: 1px solid #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     padding: 4px 10px;
     font-size: 11px;
-    color: #555;
-    background: #fff;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.04);
 }
 
 
@@ -432,7 +445,7 @@ a {
 ================================ */
 
 .projects-section {
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .projects-header {
@@ -447,33 +460,35 @@ a {
     font-size: clamp(32px, 5vw, 56px);
     line-height: 0.95;
     letter-spacing: -2px;
+    color: #ffffff;
 }
 
 .projects-header h2 span {
-    background: linear-gradient(135deg, #171717 0%, #666666 100%);
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .projects-intro {
     max-width: 500px;
     font-size: 15px;
-    color: #666;
+    color: #94a3b8;
 }
 
 .projects-list {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .project {
     padding: 24px 12px 28px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     transition: background-color 0.25s ease;
 }
 
 .project:hover {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
 .project-top {
@@ -482,7 +497,7 @@ a {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 1px;
-    color: #888;
+    color: #64748b;
 }
 
 .project-content {
@@ -496,12 +511,13 @@ a {
     font-size: 22px;
     font-weight: 600;
     letter-spacing: -0.5px;
+    color: #ffffff;
 }
 
 .project-info p {
     max-width: 520px;
     margin-top: 8px;
-    color: #666;
+    color: #94a3b8;
     font-size: 14px;
 }
 
@@ -513,12 +529,12 @@ a {
 }
 
 .project-tags span {
-    border: 1px solid #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     padding: 4px 10px;
     font-size: 11px;
-    color: #555;
-    background: #fff;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .workflow {
@@ -531,8 +547,8 @@ a {
 .workflow-step {
     min-width: 95px;
     padding: 10px 8px;
-    border: 1px solid #ccc;
-    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #111726;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -541,23 +557,24 @@ a {
 .workflow-step span {
     font-size: 9px;
     font-weight: 700;
-    color: #999;
+    color: #64748b;
     margin-bottom: 4px;
 }
 
 .workflow-step strong {
     font-size: 11px;
     font-weight: 600;
+    color: #f1f5f9;
 }
 
 .workflow-step small {
     font-size: 10px;
-    color: #777;
+    color: #94a3b8;
     margin-top: 2px;
 }
 
 .workflow-arrow {
-    color: #aaa;
+    color: #475569;
     font-size: 12px;
 }
 
@@ -567,11 +584,12 @@ a {
 ================================ */
 
 .booking-section {
-    background: #121212 !important;
+    background: #060911 !important;
     color: #fff;
     padding: 70px 7%;
     position: relative;
     overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .booking-section::before {
@@ -581,7 +599,7 @@ a {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
     pointer-events: none;
 }
 
@@ -600,11 +618,11 @@ a {
 }
 
 .booking-header h2 span {
-    color: #888;
+    color: #64748b;
 }
 
 .booking-copy p {
-    color: #aaa;
+    color: #94a3b8;
     font-size: 15px;
 }
 
@@ -613,12 +631,12 @@ a {
     margin-top: 10px;
     font-size: 11px;
     letter-spacing: 1.5px;
-    color: #777;
+    color: #64748b;
     font-weight: 600;
 }
 
 .calendar-box {
-    border: 1px solid #333;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.02);
 }
@@ -627,10 +645,10 @@ a {
     display: flex;
     justify-content: space-between;
     padding: 12px 18px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 10px;
     letter-spacing: 1px;
-    color: #777;
+    color: #64748b;
     font-weight: 600;
 }
 
@@ -647,7 +665,7 @@ a {
 .calendar-icon {
     width: 44px;
     height: 44px;
-    border: 1px solid #444;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -660,29 +678,30 @@ a {
 }
 
 .calendar-icon:hover {
-    border-color: #888;
+    border-color: #38bdf8;
     transform: scale(1.08);
 }
 
 .calendar-icon span {
     font-size: 18px;
-    color: #ddd;
+    color: #e2e8f0;
 }
 
 .calendar-placeholder h3 {
     font-size: 18px;
     font-weight: 500;
+    color: #ffffff;
 }
 
 .calendar-placeholder p {
     margin-top: 4px;
-    color: #888;
+    color: #94a3b8;
     font-size: 13px;
 }
 
 .calendar-button {
     margin-top: 16px;
-    border: 1px solid #555;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     background: transparent;
     color: white;
     padding: 8px 20px;
@@ -697,7 +716,7 @@ a {
 
 .calendar-button:hover {
     background: white;
-    color: #171717;
+    color: #090d16;
     border-color: white;
     transform: translateY(-2px);
 }
@@ -711,13 +730,14 @@ a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .contact-intro {
     margin-top: 16px;
     max-width: 380px;
     font-size: 15px;
-    color: #666;
+    color: #94a3b8;
 }
 
 .contact-form {
@@ -733,7 +753,7 @@ a {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 4px;
-    color: #444;
+    color: #cbd5e1;
 }
 
 .form-group input,
@@ -741,13 +761,19 @@ a {
 .form-group textarea {
     width: 100%;
     border: none;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     background: transparent;
     padding: 8px 0;
     font-family: inherit;
     font-size: 14px;
+    color: #ffffff;
     outline: none;
     transition: border-color 0.2s ease;
+}
+
+.form-group select option {
+    background: #090d16;
+    color: #ffffff;
 }
 
 .form-group textarea {
@@ -757,7 +783,7 @@ a {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #171717;
+    border-color: #38bdf8;
 }
 
 #formStatus {
@@ -772,11 +798,11 @@ a {
 
 footer {
     padding: 24px 7%;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    color: #777;
+    color: #64748b;
 }
 
 
@@ -810,7 +836,7 @@ footer {
         right: -100%;
         width: 100%;
         height: 100vh;
-        background: #f7f7f5;
+        background: #090d16;
         flex-direction: column;
         justify-content: center;
         align-items: center;
