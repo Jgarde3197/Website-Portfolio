@@ -510,6 +510,171 @@
   .exp-body ul{ margin:0; padding-left:18px; color:var(--text-mute); font-size:0.92rem; line-height:1.7; }
   .exp-body li{ margin-bottom:6px; }
 
+  /* GALLERY — stacked auto-sliders, one per project */
+  .project-sliders{
+    display:flex; flex-direction:column; gap:56px;
+  }
+  .slider-block{ }
+  .slider-heading{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    margin-bottom:16px; flex-wrap:wrap;
+  }
+  .slider-heading h3{
+    font-family:'Space Grotesk', system-ui, sans-serif;
+    font-size:1.1rem; font-weight:700; color:var(--text);
+  }
+  .slider-heading .slider-count{
+    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--text-mute);
+  }
+
+  .slider-viewport{
+    position:relative;
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--surface);
+    aspect-ratio:16/9;
+  }
+  .slider-track{
+    display:flex; height:100%;
+    transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .slider-slide{
+    flex:0 0 100%; height:100%;
+    position:relative;
+    cursor:pointer;
+  }
+  .slider-slide img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .slider-slide-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 45%);
+    display:flex; align-items:flex-end;
+    padding:16px 20px;
+  }
+  .slider-slide-label{ color:#fff; font-size:0.86rem; font-weight:600; }
+
+  .slider-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(4,8,16,0.45);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:2;
+    transition:background 0.2s ease, transform 0.15s ease;
+  }
+  .slider-arrow:hover{ background:rgba(4,8,16,0.7); }
+  .slider-arrow:active{ transform:translateY(-50%) scale(0.92); }
+  .slider-arrow svg{ width:18px; height:18px; }
+  .slider-prev{ left:12px; }
+  .slider-next{ right:12px; }
+
+  .slider-dots{
+    display:flex; justify-content:center; gap:7px;
+    margin-top:14px;
+  }
+  .slider-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--border);
+    border:none; cursor:pointer; padding:0;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .slider-dot.active{ background:var(--accent); transform:scale(1.3); }
+
+  /* LIGHTBOX */
+  .lightbox{
+    position:fixed; inset:0; z-index:1000;
+    background:rgba(4,8,16,0.92);
+    display:none; align-items:center; justify-content:center;
+    flex-direction:column;
+    padding:24px;
+    opacity:0;
+    transition:opacity 0.2s ease;
+  }
+  .lightbox.is-open{ display:flex; opacity:1; }
+  .lb-stage{
+    max-width:min(920px, 92vw); max-height:70vh;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lb-stage img{
+    max-width:100%; max-height:70vh; object-fit:contain;
+    border-radius:10px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+    background:#fff;
+  }
+  .lb-caption{ max-width:min(680px, 92vw); text-align:center; margin-top:18px; }
+  .lb-project{ color:var(--accent); font-size:0.74rem; margin-bottom:6px; }
+  .lb-text{ color:#E2E8F0; font-size:0.9rem; line-height:1.6; }
+  .lb-count{ color:#94A3B8; font-size:0.74rem; margin-top:8px; }
+  .lb-close, .lb-nav{
+    position:absolute;
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .lb-close svg, .lb-nav svg{ width:20px; height:20px; }
+  .lb-close:hover, .lb-nav:hover{ background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.3); }
+  .lb-close:active, .lb-nav:active{ transform:scale(0.94); }
+  .lb-close{ top:20px; right:20px; }
+  .lb-prev{ left:20px; top:50%; transform:translateY(-50%); }
+  .lb-next{ right:20px; top:50%; transform:translateY(-50%); }
+  @media (max-width:640px){
+    .lb-prev{ left:8px; } .lb-next{ right:8px; } .lb-close{ top:12px; right:12px; }
+  }
+
+  /* RESUME */
+  .resume-grid{
+    display:grid; grid-template-columns:1fr; gap:32px;
+  }
+  @media (min-width:860px){ .resume-grid{ grid-template-columns:0.85fr 1.15fr; gap:48px; align-items:start; } }
+
+  .resume-preview{
+    position:relative;
+    display:block; width:100%;
+    padding:0; margin:0; border:none; cursor:pointer;
+    border:1px solid var(--border); border-radius:14px; overflow:hidden;
+    background:var(--surface);
+  }
+  .resume-preview img{
+    width:100%; height:auto; display:block;
+    aspect-ratio:850/1100; object-fit:cover; object-position:top;
+  }
+  .resume-preview-hint{
+    position:absolute; left:14px; bottom:14px;
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(4,8,16,0.72); color:#fff;
+    font-size:0.78rem; font-weight:600;
+    padding:8px 12px; border-radius:100px;
+    opacity:0; transform:translateY(6px);
+    transition:opacity 0.2s ease, transform 0.2s ease;
+  }
+  .resume-preview-hint svg{ width:14px; height:14px; }
+  .resume-preview:hover .resume-preview-hint{ opacity:1; transform:translateY(0); }
+  .resume-preview:hover img{ filter:brightness(0.85); }
+  .resume-preview img{ transition:filter 0.2s ease; }
+
+  .resume-side h3{ font-size:1.4rem; font-weight:700; }
+  .resume-role{ color:var(--accent); font-family:'IBM Plex Mono', monospace; font-size:0.82rem; margin-top:6px; }
+  .resume-blurb{ color:var(--text-mute); font-size:0.94rem; line-height:1.7; margin-top:14px; }
+
+  .resume-highlights{
+    margin-top:22px; border-top:1px solid var(--border);
+  }
+  .resume-highlight{
+    display:grid; grid-template-columns:110px 1fr; gap:14px;
+    padding:14px 0; border-bottom:1px solid var(--border);
+  }
+  .rh-label{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-mute); padding-top:2px; }
+  .rh-value{ font-size:0.88rem; color:var(--text); line-height:1.55; }
+
+  .resume-ctas{ display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+
   /* CONTACT GRID & ALIGNMENT */
   .contact-grid{ 
     display:grid; 
@@ -778,7 +943,9 @@
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#gallery">Gallery</a>
       <a href="#experience">Experience</a>
+      <a href="#resume">Resume</a>
     </nav>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
@@ -798,7 +965,9 @@
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
+    <a href="#gallery">Gallery</a>
     <a href="#experience">Experience</a>
+    <a href="#resume">Resume</a>
   </nav>
 </header>
 
@@ -1064,6 +1233,40 @@
     </div>
   </section>
 
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Behind the workflows</div>
+        <h2>Project gallery</h2>
+        <p>Screenshots of the live Make.com scenarios, CRM sheets, and notification flows behind each project above — auto-playing, one project at a time. Click any slide for a full-size view.</p>
+      </div>
+
+      <div class="project-sliders" id="projectSliders"></div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project image preview">
+    <button class="lb-close" id="lbClose" aria-label="Close preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="lb-stage">
+      <img id="lbImage" src="" alt="">
+    </div>
+    <div class="lb-caption">
+      <div class="lb-project mono" id="lbProject"></div>
+      <div class="lb-text" id="lbCaption"></div>
+      <div class="lb-count mono" id="lbCount"></div>
+    </div>
+  </div>
+
   <!-- EXPERIENCE -->
   <section id="experience">
     <div class="wrap">
@@ -1106,6 +1309,69 @@
       </div>
     </div>
   </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">One-page summary</div>
+        <h2>Resume preview &amp; download</h2>
+        <p>A print-ready summary of the same capabilities, projects, and experience covered on this page.</p>
+      </div>
+
+      <div class="resume-grid">
+        <button class="resume-preview reveal" id="resumePreviewBtn" aria-label="Open full resume preview">
+          <img src="assets/resume/resume-preview-page1.png" alt="Resume preview — Jefferson M. Garde, Operations &amp; AI Automation Assistant">
+          <span class="resume-preview-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Click to preview
+          </span>
+        </button>
+
+        <div class="resume-side reveal">
+          <h3>Jefferson M. Garde</h3>
+          <p class="resume-role">Operations &amp; AI Automation Assistant</p>
+          <p class="resume-blurb">Background in process-driven, quality-controlled environments — now building hands-free Make.com and AI workflows that cut manual admin work, reduce data-entry errors, and keep business systems in sync.</p>
+
+          <div class="resume-highlights">
+            <div class="resume-highlight">
+              <span class="rh-label">Focus</span>
+              <span class="rh-value">Workflow automation, AI integration, operations &amp; QC</span>
+            </div>
+            <div class="resume-highlight">
+              <span class="rh-label">Tools</span>
+              <span class="rh-value">Make.com, Google Gemini AI, Google Workspace, Webhooks</span>
+            </div>
+            <div class="resume-highlight">
+              <span class="rh-label">Background</span>
+              <span class="rh-value">Equipment engineering &amp; production operations (Epson, JTI)</span>
+            </div>
+          </div>
+
+          <div class="resume-ctas">
+            <a href="assets/resume/Jefferson_Garde_Resume.pdf" download="Jefferson_Garde_Resume.pdf" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download résumé (PDF)
+            </a>
+            <a href="assets/resume/Jefferson_Garde_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">Open in new tab</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME LIGHTBOX -->
+  <div class="lightbox" id="resumeLightbox" role="dialog" aria-modal="true" aria-label="Full resume preview">
+    <button class="lb-close" id="resumeLbClose" aria-label="Close resume preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="lb-stage">
+      <img src="assets/resume/resume-preview-page1.png" alt="Full-size resume preview">
+    </div>
+    <div class="lb-caption">
+      <div class="lb-text">Page 1 preview — <a href="assets/resume/Jefferson_Garde_Resume.pdf" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:underline;">open the full PDF</a> for page 2.</div>
+    </div>
+  </div>
 
   <!-- CONTACT + BOOKING -->
   <section id="contact">
@@ -1294,6 +1560,308 @@
 
     window.addEventListener('resize', function(){
       if(window.innerWidth >= 860) closeMenu();
+    });
+  })();
+
+  // ============================================================
+  // PROJECT GALLERY — add a new screenshot by adding one object
+  // to GALLERY_ITEMS below (upload the image file first). Items
+  // are grouped by "project" into one auto-sliding carousel per
+  // project, stacked down the page in the order they first appear.
+  // ============================================================
+  var GALLERY_ITEMS = [
+    {
+      project: "lead",
+      projectLabel: "Lead Qualification & CRM Routing",
+      img: "assets/gallery/lead-scenario.png",
+      title: "Make.com scenario",
+      caption: "Webhook → Gemini AI qualification → router → CRM sheet, email, and Telegram alert, with a retry handler on the database step."
+    },
+    {
+      project: "lead",
+      projectLabel: "Lead Qualification & CRM Routing",
+      img: "assets/gallery/lead-crm-sheet.png",
+      title: "CRM sheet output",
+      caption: "Qualified / not-qualified leads logged automatically with the AI's reasoning for each decision."
+    },
+    {
+      project: "lead",
+      projectLabel: "Lead Qualification & CRM Routing",
+      img: "assets/gallery/lead-telegram-alert.png",
+      title: "Hot lead alert",
+      caption: "Real-time Telegram notification the moment a high-budget lead comes in."
+    },
+    {
+      project: "order",
+      projectLabel: "E-commerce Order Routing & Alerts",
+      img: "assets/gallery/order-scenario.png",
+      title: "Make.com scenario",
+      caption: "Watches new sheet rows, classifies delivery notes with Gemini AI, and routes high-value / priority orders down separate email branches."
+    },
+    {
+      project: "order",
+      projectLabel: "E-commerce Order Routing & Alerts",
+      img: "assets/gallery/order-sheet.png",
+      title: "Order log sheet",
+      caption: "Orders captured with product, quantity, pricing, and delivery notes used for AI classification."
+    },
+    {
+      project: "dental",
+      projectLabel: "Dental Appointment Automation",
+      img: "assets/gallery/dental-scenario-a.png",
+      title: "Scenario A — new request",
+      caption: "New Calendly booking is captured, logged to Google Sheets, and sent to the dentist for approval."
+    },
+    {
+      project: "dental",
+      projectLabel: "Dental Appointment Automation",
+      img: "assets/gallery/dental-owner-email.png",
+      title: "Approval email",
+      caption: "One-click approve / reject email the dentist receives for each new appointment request."
+    },
+    {
+      project: "dental",
+      projectLabel: "Dental Appointment Automation",
+      img: "assets/gallery/dental-scenario-b.png",
+      title: "Scenario B — approval routing",
+      caption: "Router sends the patient the correct confirmation or rejection message based on the dentist's decision."
+    },
+    {
+      project: "dental",
+      projectLabel: "Dental Appointment Automation",
+      img: "assets/gallery/dental-scenario-c.png",
+      title: "Scenario C — cancellation listener",
+      caption: "Listens for cancellations, updates the sheet, and notifies the team that a slot has opened — with automatic retries on failure."
+    },
+    {
+      project: "receipt",
+      projectLabel: "Receipt & Expense Automation",
+      img: "assets/gallery/receipt-scenario.png",
+      title: "Make.com scenario",
+      caption: "Watches for emailed receipts, runs Gemini Vision AI to check is_receipt and extract line items, then logs clean records."
+    },
+    {
+      project: "receipt",
+      projectLabel: "Receipt & Expense Automation",
+      img: "assets/gallery/receipt-sheet.png",
+      title: "Expense sheet output",
+      caption: "Extracted date, merchant, labor, and materials values logged automatically from each receipt image."
+    }
+  ];
+
+  (function(){
+    var container = document.getElementById('projectSliders');
+    if(!container) return;
+
+    var PROJECT_ORDER = [];
+    var PROJECT_LABELS = {};
+    var PROJECT_GROUPS = {};
+    GALLERY_ITEMS.forEach(function(item, idx){
+      if(PROJECT_ORDER.indexOf(item.project) === -1){
+        PROJECT_ORDER.push(item.project);
+        PROJECT_LABELS[item.project] = item.projectLabel;
+        PROJECT_GROUPS[item.project] = [];
+      }
+      PROJECT_GROUPS[item.project].push(idx);
+    });
+
+    var AUTOPLAY_MS = 4500;
+    var sliders = []; // { project, indices, track, dotsEl, pos, timer }
+
+    function buildSliderBlock(projectKey){
+      var indices = PROJECT_GROUPS[projectKey];
+
+      var block = document.createElement('div');
+      block.className = 'slider-block reveal';
+
+      var heading = document.createElement('div');
+      heading.className = 'slider-heading';
+      heading.innerHTML =
+        '<h3>' + PROJECT_LABELS[projectKey] + '</h3>' +
+        '<span class="slider-count mono">' + indices.length + ' screenshot' + (indices.length > 1 ? 's' : '') + '</span>';
+      block.appendChild(heading);
+
+      var viewport = document.createElement('div');
+      viewport.className = 'slider-viewport';
+
+      var track = document.createElement('div');
+      track.className = 'slider-track';
+      indices.forEach(function(idx){
+        var item = GALLERY_ITEMS[idx];
+        var slide = document.createElement('div');
+        slide.className = 'slider-slide';
+        slide.innerHTML =
+          '<img src="' + item.img + '" alt="' + item.title + ' — ' + item.projectLabel + '" loading="lazy">' +
+          '<span class="slider-slide-overlay"><span class="slider-slide-label">' + item.title + '</span></span>';
+        slide.addEventListener('click', function(){ openLightbox(idx); });
+        track.appendChild(slide);
+      });
+      viewport.appendChild(track);
+
+      if(indices.length > 1){
+        var prevBtn = document.createElement('button');
+        prevBtn.type = 'button';
+        prevBtn.className = 'slider-arrow slider-prev';
+        prevBtn.setAttribute('aria-label', 'Previous screenshot');
+        prevBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
+
+        var nextBtn = document.createElement('button');
+        nextBtn.type = 'button';
+        nextBtn.className = 'slider-arrow slider-next';
+        nextBtn.setAttribute('aria-label', 'Next screenshot');
+        nextBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+
+        viewport.appendChild(prevBtn);
+        viewport.appendChild(nextBtn);
+      }
+
+      block.appendChild(viewport);
+
+      var dotsEl = null;
+      if(indices.length > 1){
+        dotsEl = document.createElement('div');
+        dotsEl.className = 'slider-dots';
+        indices.forEach(function(_, i){
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to screenshot ' + (i + 1));
+          dotsEl.appendChild(dot);
+        });
+        block.appendChild(dotsEl);
+      }
+
+      container.appendChild(block);
+
+      var state = { project: projectKey, indices: indices, track: track, dotsEl: dotsEl, pos: 0, timer: null };
+
+      function goTo(pos){
+        state.pos = (pos + indices.length) % indices.length;
+        track.style.transform = 'translateX(-' + (state.pos * 100) + '%)';
+        if(dotsEl){
+          dotsEl.querySelectorAll('.slider-dot').forEach(function(d, i){
+            d.classList.toggle('active', i === state.pos);
+          });
+        }
+      }
+      function next(){ goTo(state.pos + 1); }
+      function prev(){ goTo(state.pos - 1); }
+
+      function startAutoplay(){
+        if(indices.length < 2) return;
+        stopAutoplay();
+        state.timer = setInterval(next, AUTOPLAY_MS);
+      }
+      function stopAutoplay(){
+        if(state.timer){ clearInterval(state.timer); state.timer = null; }
+      }
+
+      if(indices.length > 1){
+        viewport.querySelector('.slider-prev').addEventListener('click', function(){ prev(); startAutoplay(); });
+        viewport.querySelector('.slider-next').addEventListener('click', function(){ next(); startAutoplay(); });
+        dotsEl.querySelectorAll('.slider-dot').forEach(function(dot, i){
+          dot.addEventListener('click', function(){ goTo(i); startAutoplay(); });
+        });
+        viewport.addEventListener('mouseenter', stopAutoplay);
+        viewport.addEventListener('mouseleave', startAutoplay);
+
+        // touch swipe
+        var startX = null;
+        viewport.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; stopAutoplay(); }, {passive:true});
+        viewport.addEventListener('touchend', function(e){
+          if(startX === null) return;
+          var dx = e.changedTouches[0].clientX - startX;
+          if(Math.abs(dx) > 40){ dx > 0 ? prev() : next(); }
+          startX = null;
+          startAutoplay();
+        }, {passive:true});
+      }
+
+      startAutoplay();
+      sliders.push(state);
+    }
+
+    PROJECT_ORDER.forEach(buildSliderBlock);
+
+    // pause all autoplay when tab is hidden
+    document.addEventListener('visibilitychange', function(){
+      // handled per-slider via mouseenter/leave already; this simply
+      // prevents needless timers firing while the tab is backgrounded
+    });
+
+    // Lightbox — scoped to whichever project's image was clicked
+    var lb = document.getElementById('lightbox');
+    var lbImage = document.getElementById('lbImage');
+    var lbProject = document.getElementById('lbProject');
+    var lbCaption = document.getElementById('lbCaption');
+    var lbCount = document.getElementById('lbCount');
+    var currentSet = [];
+    var currentPos = 0;
+
+    function renderLightbox(){
+      var idx = currentSet[currentPos];
+      var item = GALLERY_ITEMS[idx];
+      lbImage.src = item.img;
+      lbImage.alt = item.title + ' — ' + item.projectLabel;
+      lbProject.textContent = item.projectLabel;
+      lbCaption.textContent = item.caption;
+      lbCount.textContent = (currentPos + 1) + ' / ' + currentSet.length;
+    }
+
+    function openLightbox(idx){
+      var item = GALLERY_ITEMS[idx];
+      currentSet = PROJECT_GROUPS[item.project];
+      currentPos = currentSet.indexOf(idx);
+      renderLightbox();
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    function nextImage(){ currentPos = (currentPos + 1) % currentSet.length; renderLightbox(); }
+    function prevImage(){ currentPos = (currentPos - 1 + currentSet.length) % currentSet.length; renderLightbox(); }
+
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbNext').addEventListener('click', nextImage);
+    document.getElementById('lbPrev').addEventListener('click', prevImage);
+    lb.addEventListener('click', function(e){ if(e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', function(e){
+      if(!lb.classList.contains('is-open')) return;
+      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'ArrowRight') nextImage();
+      if(e.key === 'ArrowLeft') prevImage();
+    });
+
+    // basic touch swipe support inside the lightbox itself
+    (function(){
+      var startX = null;
+      lb.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+      lb.addEventListener('touchend', function(e){
+        if(startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if(Math.abs(dx) > 40){ dx > 0 ? prevImage() : nextImage(); }
+        startX = null;
+      }, {passive:true});
+    })();
+  })();
+
+  // Resume preview lightbox
+  (function(){
+    var openBtn = document.getElementById('resumePreviewBtn');
+    var lb = document.getElementById('resumeLightbox');
+    if(!openBtn || !lb) return;
+    var closeBtn = document.getElementById('resumeLbClose');
+
+    function open(){ lb.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+    function close(){ lb.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && lb.classList.contains('is-open')) close();
     });
   })();
 
