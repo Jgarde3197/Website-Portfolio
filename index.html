@@ -946,6 +946,286 @@
     opacity:0.35; cursor:default; pointer-events:none;
   }
 </style>
+<!-- ===== AI CHATBOT WIDGET — styles ===== -->
+<style>
+/* =================================================
+   AI CHATBOT WIDGET — styles
+   Uses the site's existing design tokens only:
+   --bg, --surface, --accent, --accent-soft, --border,
+   --text, --text-mute. No new tokens introduced, so
+   this syncs automatically with html.dark toggling.
+   Link this file in <head>, after your main stylesheet,
+   so it can rely on the tokens already being defined.
+   ================================================= */
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ---------- Trigger button ---------- */
+.chatbot-trigger{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:1000;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--accent);
+  color:#04121C;
+  border:1px solid var(--border);
+  box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  cursor:pointer;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+html.dark .chatbot-trigger{ color:#03121B; }
+.chatbot-trigger:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,0.22); }
+.chatbot-trigger:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+.chatbot-trigger-icon{ position:absolute; transition:opacity 0.15s ease, transform 0.15s ease; }
+.chatbot-trigger .icon-close{ opacity:0; transform:scale(0.6) rotate(-45deg); }
+.chatbot-trigger .icon-open{ opacity:1; transform:scale(1) rotate(0deg); }
+.chatbot-trigger[aria-expanded="true"] .icon-open{ opacity:0; transform:scale(0.6) rotate(45deg); }
+.chatbot-trigger[aria-expanded="true"] .icon-close{ opacity:1; transform:scale(1) rotate(0deg); }
+
+.chatbot-trigger-dot{
+  position:absolute;
+  top:4px; right:4px;
+  width:10px; height:10px;
+  border-radius:50%;
+  background:#22C55E;
+  border:2px solid var(--surface);
+}
+.chatbot-trigger[aria-expanded="true"] .chatbot-trigger-dot{ display:none; }
+
+/* ---------- Panel ---------- */
+.chatbot-panel{
+  position:fixed;
+  right:24px;
+  bottom:92px;
+  z-index:1000;
+  width:min(380px, calc(100vw - 32px));
+  height:min(560px, calc(100vh - 140px));
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.28);
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(12px) scale(0.98);
+  transform-origin:bottom right;
+  transition:opacity 0.18s ease, transform 0.18s ease;
+  pointer-events:none;
+}
+.chatbot-panel.is-open{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+.chatbot-panel[hidden]{ display:none; }
+
+@media (max-width: 480px){
+  .chatbot-panel{
+    right:16px;
+    left:16px;
+    width:auto;
+    bottom:88px;
+    height:min(70vh, 560px);
+  }
+  .chatbot-trigger{ right:16px; bottom:16px; }
+}
+
+/* ---------- Header ---------- */
+.chatbot-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  flex-shrink:0;
+}
+.chatbot-header-info{ display:flex; align-items:center; gap:10px; min-width:0; }
+.chatbot-avatar{
+  width:34px; height:34px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--accent-soft);
+  color:var(--accent);
+  flex-shrink:0;
+}
+.chatbot-header-text{ min-width:0; }
+.chatbot-header-text h2{
+  margin:0;
+  font-size:0.95rem;
+  font-weight:600;
+  color:var(--text);
+  font-family:'Space Grotesk', sans-serif;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.chatbot-substatus{
+  margin:2px 0 0;
+  font-size:0.76rem;
+  color:var(--text-mute);
+  display:flex; align-items:center; gap:5px;
+}
+.chatbot-status-dot{
+  width:6px; height:6px; border-radius:50%;
+  background:#22C55E;
+  flex-shrink:0;
+}
+.chatbot-substatus.is-typing .chatbot-status-dot{ background:var(--accent); }
+
+.chatbot-close{
+  width:32px; height:32px;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  background:transparent;
+  border:1px solid transparent;
+  color:var(--text-mute);
+  cursor:pointer;
+  flex-shrink:0;
+  transition:background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.chatbot-close:hover{ color:var(--text); border-color:var(--border); }
+.chatbot-close:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+/* ---------- Messages ---------- */
+.chatbot-messages{
+  flex:1 1 auto;
+  overflow-y:auto;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:var(--bg);
+  scroll-behavior:smooth;
+}
+.chatbot-messages::-webkit-scrollbar{ width:6px; }
+.chatbot-messages::-webkit-scrollbar-thumb{ background:var(--border); border-radius:3px; }
+
+.chatbot-msg{ display:flex; max-width:100%; }
+.chatbot-msg-user{ justify-content:flex-end; }
+.chatbot-msg-bot{ justify-content:flex-start; }
+
+.chatbot-bubble{
+  max-width:82%;
+  padding:9px 13px;
+  border-radius:14px;
+  font-size:0.88rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+  overflow-wrap:anywhere;
+}
+.chatbot-msg-bot .chatbot-bubble{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-bottom-left-radius:4px;
+}
+.chatbot-msg-user .chatbot-bubble{
+  background:var(--accent);
+  color:#04121C;
+  border-bottom-right-radius:4px;
+}
+html.dark .chatbot-msg-user .chatbot-bubble{ color:#03121B; }
+
+.chatbot-msg-error .chatbot-bubble{
+  background:transparent;
+  border:1px solid #DC2626;
+  color:#DC2626;
+}
+
+/* Typing indicator */
+.chatbot-typing .chatbot-bubble{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:12px 14px;
+}
+.chatbot-typing-dot{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--text-mute);
+  animation:chatbotTypingBounce 1.2s infinite ease-in-out;
+}
+.chatbot-typing-dot:nth-child(2){ animation-delay:0.15s; }
+.chatbot-typing-dot:nth-child(3){ animation-delay:0.3s; }
+@keyframes chatbotTypingBounce{
+  0%, 60%, 100%{ transform:translateY(0); opacity:0.5; }
+  30%{ transform:translateY(-4px); opacity:1; }
+}
+@media (prefers-reduced-motion: reduce){
+  .chatbot-typing-dot{ animation:none; }
+  .chatbot-panel, .chatbot-trigger-icon{ transition:none; }
+}
+
+/* ---------- Input row ---------- */
+.chatbot-input-row{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid var(--border);
+  background:var(--surface);
+  flex-shrink:0;
+}
+.chatbot-input{
+  flex:1 1 auto;
+  resize:none;
+  max-height:120px;
+  padding:9px 12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  font-family:inherit;
+  font-size:0.88rem;
+  line-height:1.4;
+}
+.chatbot-input::placeholder{ color:var(--text-mute); }
+.chatbot-input:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:1px;
+  border-color:var(--accent);
+}
+
+.chatbot-send{
+  width:38px; height:38px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--accent);
+  color:#04121C;
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:transform 0.15s ease, opacity 0.15s ease;
+}
+html.dark .chatbot-send{ color:#03121B; }
+.chatbot-send:hover:not(:disabled){ transform:translateY(-1px); }
+.chatbot-send:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.chatbot-send:disabled{ opacity:0.5; cursor:not-allowed; transform:none; }
+
+.chatbot-error{
+  margin:0;
+  padding:8px 16px 12px;
+  font-size:0.78rem;
+  color:#DC2626;
+  background:var(--surface);
+}
+.chatbot-error[hidden]{ display:none; }
+
+</style>
 </head>
 <body>
 
@@ -1969,5 +2249,435 @@
   })();
 </script>
 
+
+<!-- Trigger button -->
+<button
+  type="button"
+  id="chatbotTrigger"
+  class="chatbot-trigger"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="chatbotPanel"
+  aria-label="Open chat assistant"
+>
+  <svg class="chatbot-trigger-icon icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+  </svg>
+  <svg class="chatbot-trigger-icon icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+  <span class="chatbot-trigger-dot" aria-hidden="true"></span>
+</button>
+
+<!-- Chat panel -->
+<section
+  id="chatbotPanel"
+  class="chatbot-panel"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="chatbotTitle"
+  aria-hidden="true"
+  hidden
+>
+  <header class="chatbot-header">
+    <div class="chatbot-header-info">
+      <span class="chatbot-avatar" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+      </span>
+      <div class="chatbot-header-text">
+        <h2 id="chatbotTitle">Ask me anything</h2>
+        <p id="chatbotStatus" class="chatbot-substatus">
+          <span class="chatbot-status-dot" aria-hidden="true"></span>
+          Online
+        </p>
+      </div>
+    </div>
+    <button type="button" id="chatbotClose" class="chatbot-close" aria-label="Close chat">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </header>
+
+  <div
+    id="chatbotMessages"
+    class="chatbot-messages"
+    role="log"
+    aria-live="polite"
+    aria-label="Conversation"
+  >
+    <div class="chatbot-msg chatbot-msg-bot">
+      <div class="chatbot-bubble">
+        Hi! 👋 I'm an assistant for this site. Ask me about services, availability, or anything else.
+      </div>
+    </div>
+  </div>
+
+  <form id="chatbotForm" class="chatbot-input-row" autocomplete="off">
+    <label for="chatbotInput" class="sr-only">Type a message</label>
+    <textarea
+      id="chatbotInput"
+      class="chatbot-input"
+      placeholder="Type a message…"
+      rows="1"
+      maxlength="2000"
+      required
+    ></textarea>
+    <button type="submit" id="chatbotSend" class="chatbot-send" aria-label="Send message">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </form>
+  <p id="chatbotError" class="chatbot-error" role="alert" hidden></p>
+</section>
+
+
+<!-- ===== AI CHATBOT WIDGET — behavior ===== -->
+<script>
+// =================================================
+// AI CHATBOT WIDGET — behavior
+// Self-contained. Follows the same vanilla-JS / IIFE
+// style as the rest of index.html. Load this file
+// with a deferred script tag referencing this file,
+// placed just before the closing body tag, after the
+// chatbot markup.
+// =================================================
+(function () {
+  'use strict';
+
+  // -------------------------------------------------
+  // CONFIG — replace with your chatbot's webhook.
+  // Same pattern as the existing contact-form webhook.
+  // Expected response shape (either works):
+  //   { "reply": "text to show" }
+  //   { "message": "text to show" }
+  // If the endpoint is unreachable or errors out, the
+  // widget falls back to a safe offline message instead
+  // of breaking.
+  // -------------------------------------------------
+  var CHATBOT_WEBHOOK_URL = "https://hook.eu1.make.com/oss76b8dyq7whrdfwuxo4l6zvnj9ndbc";
+  var REQUEST_TIMEOUT_MS = 15000;
+
+  // Persistent per-tab session id — required by the Make.com scenario's
+  // Airtable "Search Records" step so each conversation gets its own row
+  // instead of every message updating the same old record.
+  function getSessionId() {
+    var key = 'chatbotSessionId';
+    try {
+      var existing = window.sessionStorage.getItem(key);
+      if (existing) return existing;
+      var fresh = (window.crypto && window.crypto.randomUUID) ?
+        window.crypto.randomUUID() :
+        'sid-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+      window.sessionStorage.setItem(key, fresh);
+      return fresh;
+    } catch (e) {
+      // sessionStorage unavailable (e.g. some privacy modes) — fall back
+      // to an in-memory id that stays stable for this page load only.
+      return 'sid-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    }
+  }
+  var CHATBOT_SESSION_ID = getSessionId();
+
+  var trigger = document.getElementById('chatbotTrigger');
+  var panel = document.getElementById('chatbotPanel');
+  var closeBtn = document.getElementById('chatbotClose');
+  var messagesEl = document.getElementById('chatbotMessages');
+  var form = document.getElementById('chatbotForm');
+  var input = document.getElementById('chatbotInput');
+  var sendBtn = document.getElementById('chatbotSend');
+  var statusEl = document.getElementById('chatbotStatus');
+  var errorEl = document.getElementById('chatbotError');
+
+  if (!trigger || !panel || !form || !input || !messagesEl) return;
+
+  var isOpen = false;
+  var isSending = false;
+  var focusableSelector = 'button, textarea, input, [href], [tabindex]:not([tabindex="-1"])';
+
+  // ---------- HTML escaping ----------
+  function escapeHTML(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Converts escaped text with newlines into safe HTML (keeps line breaks).
+  function textToSafeHTML(str) {
+    return escapeHTML(str).replace(/\n/g, '<br>');
+  }
+
+  // ---------- Scroll ----------
+  function scrollToBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  // ---------- Render messages ----------
+  function appendMessage(text, role) {
+    var row = document.createElement('div');
+    row.className = 'chatbot-msg chatbot-msg-' + role;
+
+    var bubble = document.createElement('div');
+    bubble.className = 'chatbot-bubble';
+    bubble.innerHTML = textToSafeHTML(text);
+
+    row.appendChild(bubble);
+    messagesEl.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  function appendError(text) {
+    var row = appendMessage(text, 'error');
+    row.classList.add('chatbot-msg-bot');
+    return row;
+  }
+
+  function showTypingIndicator() {
+    var row = document.createElement('div');
+    row.className = 'chatbot-msg chatbot-msg-bot chatbot-typing';
+    row.setAttribute('aria-hidden', 'true');
+
+    var bubble = document.createElement('div');
+    bubble.className = 'chatbot-bubble';
+    bubble.innerHTML =
+      '<span class="chatbot-typing-dot"></span>' +
+      '<span class="chatbot-typing-dot"></span>' +
+      '<span class="chatbot-typing-dot"></span>';
+
+    row.appendChild(bubble);
+    messagesEl.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  function setTypingStatus(isTyping) {
+    if (!statusEl) return;
+    if (isTyping) {
+      statusEl.classList.add('is-typing');
+      statusEl.lastChild.textContent = ' Typing…';
+    } else {
+      statusEl.classList.remove('is-typing');
+      statusEl.lastChild.textContent = ' Online';
+    }
+  }
+
+  function showError(msg) {
+    if (!errorEl) return;
+    errorEl.textContent = msg;
+    errorEl.hidden = false;
+  }
+
+  function clearError() {
+    if (!errorEl) return;
+    errorEl.hidden = true;
+    errorEl.textContent = '';
+  }
+
+  // ---------- Auto-growing textarea ----------
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  }
+  input.addEventListener('input', autoGrow);
+
+  // ---------- Open / close panel ----------
+  function openPanel() {
+    isOpen = true;
+    panel.hidden = false;
+    // Force reflow so the transition runs after removing [hidden]
+    void panel.offsetHeight;
+    panel.classList.add('is-open');
+    panel.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    trigger.setAttribute('aria-label', 'Close chat assistant');
+    document.addEventListener('keydown', onKeydown, true);
+    document.addEventListener('click', onClickOutside, true);
+    window.setTimeout(function () { input.focus(); }, 180);
+  }
+
+  function closePanel(returnFocus) {
+    isOpen = false;
+    panel.classList.remove('is-open');
+    panel.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-label', 'Open chat assistant');
+    document.removeEventListener('keydown', onKeydown, true);
+    document.removeEventListener('click', onClickOutside, true);
+    window.setTimeout(function () {
+      if (!isOpen) panel.hidden = true;
+    }, 200);
+    if (returnFocus !== false) trigger.focus();
+  }
+
+  function togglePanel() {
+    if (isOpen) {
+      closePanel();
+    } else {
+      openPanel();
+    }
+  }
+
+  // ---------- Keyboard / focus handling ----------
+  function onKeydown(e) {
+    if (!isOpen) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closePanel();
+      return;
+    }
+
+    // Basic focus trap within the panel
+    if (e.key === 'Tab') {
+      var focusable = panel.querySelectorAll(focusableSelector);
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
+  function onClickOutside(e) {
+    if (!isOpen) return;
+    if (panel.contains(e.target) || trigger.contains(e.target)) return;
+    closePanel(false);
+  }
+
+  trigger.addEventListener('click', togglePanel);
+  if (closeBtn) closeBtn.addEventListener('click', function () { closePanel(); });
+
+  // Enter to send, Shift+Enter for newline
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      form.requestSubmit ? form.requestSubmit() : handleSubmit();
+    }
+  });
+
+  // ---------- Fetch with timeout ----------
+  function fetchWithTimeout(url, options, timeoutMs) {
+    if (typeof AbortController === 'undefined') {
+      return fetch(url, options);
+    }
+    var controller = new AbortController();
+    var timer = window.setTimeout(function () { controller.abort(); }, timeoutMs);
+    options = options || {};
+    options.signal = controller.signal;
+    return fetch(url, options).finally(function () {
+      window.clearTimeout(timer);
+    });
+  }
+
+  // ---------- Submit handling ----------
+  function handleSubmit(e) {
+    if (e) e.preventDefault();
+    if (isSending) return;
+
+    var text = input.value.trim();
+    if (!text) {
+      input.focus();
+      return;
+    }
+
+    clearError();
+    appendMessage(text, 'user');
+    input.value = '';
+    autoGrow();
+
+    sendToWebhook(text);
+  }
+
+  function sendToWebhook(text) {
+    isSending = true;
+    sendBtn.disabled = true;
+    input.disabled = true;
+    setTypingStatus(true);
+    var typingRow = showTypingIndicator();
+
+    // Fail-safe: if no webhook has been configured yet, skip the
+    // network call and respond locally instead of breaking.
+    if (!CHATBOT_WEBHOOK_URL || CHATBOT_WEBHOOK_URL.indexOf('REPLACE_WITH') !== -1) {
+      window.setTimeout(function () {
+        typingRow.remove();
+        appendMessage(
+          "Thanks for your message! The chat assistant isn't fully connected yet — please use the contact form below and I'll get back to you directly.",
+          'bot'
+        );
+        finishSend();
+      }, 500);
+      return;
+    }
+
+    fetchWithTimeout(
+      CHATBOT_WEBHOOK_URL,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          session_id: CHATBOT_SESSION_ID,
+          sender_name: '',
+          sender_email: '',
+          timestamp: new Date().toISOString(),
+          source: 'website-chatbot'
+        })
+      },
+      REQUEST_TIMEOUT_MS
+    )
+      .then(function (res) {
+        if (!res.ok) throw new Error('Request failed with status ' + res.status);
+        var contentType = res.headers.get('content-type') || '';
+        if (contentType.indexOf('application/json') !== -1) return res.json();
+        return res.text().then(function (t) { return { reply: t }; });
+      })
+      .then(function (data) {
+        typingRow.remove();
+        var reply =
+          (data && (data.reply || data.message || data.text)) ||
+          "Sorry, I didn't get a proper response. Please try again.";
+        appendMessage(reply, 'bot');
+      })
+      .catch(function () {
+        typingRow.remove();
+        appendError(
+          "Sorry, I couldn't reach the assistant right now. Please try again in a moment, or use the contact form to reach me directly."
+        );
+        showError('Connection issue — message not delivered.');
+      })
+      .finally(function () {
+        finishSend();
+      });
+  }
+
+  function finishSend() {
+    isSending = false;
+    sendBtn.disabled = false;
+    input.disabled = false;
+    setTypingStatus(false);
+    scrollToBottom();
+    if (isOpen) input.focus();
+  }
+
+  form.addEventListener('submit', handleSubmit);
+})();
+
+</script>
 </body>
 </html>
