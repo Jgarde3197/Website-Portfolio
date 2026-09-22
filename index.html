@@ -1028,7 +1028,9 @@ html.dark .chatbot-trigger{ color:#03121B; }
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  padding:14px 16px;
+  height:62px;
+  padding:10px 14px;
+  box-sizing:border-box;
   border-bottom:1px solid var(--border);
   background:var(--surface);
   flex-shrink:0;
@@ -1081,11 +1083,12 @@ html.dark .chatbot-trigger{ color:#03121B; }
 /* ---------- Messages ---------- */
 .chatbot-messages{
   flex:1 1 auto;
+  min-height:0;
   overflow-y:auto;
-  padding:16px;
+  padding:12px 14px;
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:8px;
   background:var(--bg);
   scroll-behavior:smooth;
 }
@@ -1118,6 +1121,31 @@ html.dark .chatbot-trigger{ color:#03121B; }
   border-bottom-right-radius:4px;
 }
 html.dark .chatbot-msg-user .chatbot-bubble{ color:#03121B; }
+
+.chatbot-suggestions{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin:2px 0 0;
+}
+.chatbot-suggestion{
+  width:100%;
+  padding:8px 11px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  font:inherit;
+  font-size:0.84rem;
+  line-height:1.3;
+  text-align:left;
+  cursor:pointer;
+}
+.chatbot-suggestion:hover{ border-color:var(--accent); }
+.chatbot-suggestion:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:1px;
+}
 
 .chatbot-msg-error .chatbot-bubble{
   background:transparent;
@@ -1154,7 +1182,7 @@ html.dark .chatbot-msg-user .chatbot-bubble{ color:#03121B; }
   display:flex;
   align-items:flex-end;
   gap:8px;
-  padding:12px;
+  padding:10px 12px;
   border-top:1px solid var(--border);
   background:var(--surface);
   flex-shrink:0;
@@ -2340,8 +2368,15 @@ html.dark .chatbot-send{ color:#03121B; }
         Hi! 👋 I'm an assistant for this site. Ask me about services, availability, or anything else.
       </div>
     </div>
+    <div class="chatbot-suggestions" aria-label="Suggested questions">
+      <button type="button" class="chatbot-suggestion">What services does Jeff offer?</button>
+      <button type="button" class="chatbot-suggestion">What automation tools does Jeff use?</button>
+      <button type="button" class="chatbot-suggestion">How much does automation cost?</button>
+      <button type="button" class="chatbot-suggestion">Can I discuss a project with Jeff?</button>
+    </div>
   </div>
 
+  <p id="chatbotError" class="chatbot-error" role="alert" hidden></p>
   <form id="chatbotForm" class="chatbot-input-row" autocomplete="off">
     <label for="chatbotInput" class="sr-only">Type a message</label>
     <textarea
@@ -2359,7 +2394,6 @@ html.dark .chatbot-send{ color:#03121B; }
       </svg>
     </button>
   </form>
-  <p id="chatbotError" class="chatbot-error" role="alert" hidden></p>
 </section>
 
 
@@ -2387,7 +2421,7 @@ html.dark .chatbot-send{ color:#03121B; }
   // of breaking.
   // -------------------------------------------------
   var CHATBOT_WEBHOOK_URL = "https://hook.eu1.make.com/oss76b8dyq7whrdfwuxo4l6zvnj9ndbc";
-  var REQUEST_TIMEOUT_MS = 15000;
+  var REQUEST_TIMEOUT_MS = 30000;
 
   // Persistent per-tab session id — required by the Make.com scenario's
   // Airtable "Search Records" step so each conversation gets its own row
@@ -2419,6 +2453,7 @@ html.dark .chatbot-send{ color:#03121B; }
   var sendBtn = document.getElementById('chatbotSend');
   var statusEl = document.getElementById('chatbotStatus');
   var errorEl = document.getElementById('chatbotError');
+  var suggestionsEl = panel ? panel.querySelector('.chatbot-suggestions') : null;
 
   if (!trigger || !panel || !form || !input || !messagesEl) return;
 
@@ -2625,6 +2660,7 @@ html.dark .chatbot-send{ color:#03121B; }
     appendMessage(text, 'user');
     input.value = '';
     autoGrow();
+    if (suggestionsEl) suggestionsEl.hidden = true;
 
     sendToWebhook(text);
   }
@@ -2657,6 +2693,7 @@ html.dark .chatbot-send{ color:#03121B; }
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
+          sessionId: CHATBOT_SESSION_ID,
           session_id: CHATBOT_SESSION_ID,
           sender_name: '',
           sender_email: '',
@@ -2701,6 +2738,15 @@ html.dark .chatbot-send{ color:#03121B; }
   }
 
   form.addEventListener('submit', handleSubmit);
+
+  if (suggestionsEl) {
+    suggestionsEl.addEventListener('click', function (e) {
+      var button = e.target.closest('.chatbot-suggestion');
+      if (!button || isSending) return;
+      input.value = button.textContent.trim();
+      handleSubmit();
+    });
+  }
 })();
 
 </script>
