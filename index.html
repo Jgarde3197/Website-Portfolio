@@ -2421,7 +2421,11 @@ html.dark .chatbot-send{ color:#03121B; }
   // of breaking.
   // -------------------------------------------------
   var CHATBOT_WEBHOOK_URL = "https://hook.eu1.make.com/oss76b8dyq7whrdfwuxo4l6zvnj9ndbc";
-  var REQUEST_TIMEOUT_MS = 30000;
+  // Gemini can occasionally take longer than 30 seconds. Keep the request
+  // alive long enough for Make.com to return the completed assistant reply.
+  var REQUEST_TIMEOUT_MS = 120000;
+  var MAX_RETRY_ATTEMPTS = 2;
+  var RETRY_DELAYS_MS = [2000, 5000];
 
   // Persistent per-tab session id — required by the Make.com scenario's
   // Airtable "Search Records" step so each conversation gets its own row
@@ -2645,6 +2649,52 @@ html.dark .chatbot-send{ color:#03121B; }
     });
   }
 
+  function wait(ms) {
+    return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
+  }
+
+  function isRetryableStatus(status) {
+    return status === 429 || status === 500 || status === 502 ||
+      status === 503 || status === 504;
+  }
+
+  function requestChatbot(text, attempt) {
+    return fetchWithTimeout(
+      CHATBOT_WEBHOOK_URL,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          sessionId: CHATBOT_SESSION_ID,
+          session_id: CHATBOT_SESSION_ID,
+          sender_name: '',
+          sender_email: '',
+          timestamp: new Date().toISOString(),
+          source: 'website-chatbot'
+        })
+      },
+      REQUEST_TIMEOUT_MS
+    ).then(function (res) {
+      if (!res.ok) {
+        if (isRetryableStatus(res.status) && attempt < MAX_RETRY_ATTEMPTS) {
+          var delay = RETRY_DELAYS_MS[attempt] || RETRY_DELAYS_MS[RETRY_DELAYS_MS.length - 1];
+          return res.text().catch(function () { return ''; }).then(function () {
+            return wait(delay).then(function () {
+              return requestChatbot(text, attempt + 1);
+            });
+          });
+        }
+        var requestError = new Error('Request failed with status ' + res.status);
+        requestError.status = res.status;
+        throw requestError;
+      }
+      var contentType = res.headers.get('content-type') || '';
+      if (contentType.indexOf('application/json') !== -1) return res.json();
+      return res.text().then(function (responseText) { return { reply: responseText }; });
+    });
+  }
+
   // ---------- Submit handling ----------
   function handleSubmit(e) {
     if (e) e.preventDefault();
@@ -2686,29 +2736,7 @@ html.dark .chatbot-send{ color:#03121B; }
       return;
     }
 
-    fetchWithTimeout(
-      CHATBOT_WEBHOOK_URL,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: text,
-          sessionId: CHATBOT_SESSION_ID,
-          session_id: CHATBOT_SESSION_ID,
-          sender_name: '',
-          sender_email: '',
-          timestamp: new Date().toISOString(),
-          source: 'website-chatbot'
-        })
-      },
-      REQUEST_TIMEOUT_MS
-    )
-      .then(function (res) {
-        if (!res.ok) throw new Error('Request failed with status ' + res.status);
-        var contentType = res.headers.get('content-type') || '';
-        if (contentType.indexOf('application/json') !== -1) return res.json();
-        return res.text().then(function (t) { return { reply: t }; });
-      })
+    requestChatbot(text, 0)
       .then(function (data) {
         typingRow.remove();
         var reply =
@@ -2716,12 +2744,23 @@ html.dark .chatbot-send{ color:#03121B; }
           "Sorry, I didn't get a proper response. Please try again.";
         appendMessage(reply, 'bot');
       })
-      .catch(function () {
+      .catch(function (err) {
         typingRow.remove();
-        appendError(
-          "Sorry, I couldn't reach the assistant right now. Please try again in a moment, or use the contact form to reach me directly."
+        var timedOut = err && (err.name === 'AbortError' || err.name === 'TimeoutError');
+        var serviceBusy = err && isRetryableStatus(err.status);
+        appendError(serviceBusy
+          ? "The AI assistant is temporarily busy. Please try again in a moment."
+          : timedOut
+            ? "The assistant is taking longer than expected. Please try again in a moment."
+            : "Sorry, I couldn't reach the assistant right now. Please try again in a moment, or use the contact form to reach me directly."
         );
-        showError('Connection issue — message not delivered.');
+        showError(serviceBusy
+          ? 'Gemini is temporarily unavailable — automatic retries were unsuccessful.'
+          : timedOut
+            ? 'Request timed out — Gemini did not respond within 2 minutes.'
+            : 'Connection issue — message not delivered.'
+        );
+        if (window.console && console.error) console.error('Chatbot request failed:', err);
       })
       .finally(function () {
         finishSend();
