@@ -1345,7 +1345,7 @@ html.dark .chatbot-send{ color:#03121B; }
         <div class="about-copy" style="margin-top:22px;">
           <p>I'm a technically oriented professional working in AI and business workflow automation, with previous hands-on exposure to industrial automation and current practical experience building AI-assisted automation projects.</p>
           <p>That path started on a production floor. At <strong>Epson Precision (Philippines) Inc.</strong>, I supported engineering teams transitioning manual operations into automated machine processes — editing machine programs, reviewing flowcharts, and testing inputs and outputs until a system behaved the way it was supposed to. At <strong>Japan Tobacco International</strong>, I worked inside a SCADA-monitored production line, tracking material flow and reporting bottlenecks before they became downtime. That was industrial process work, not software or API development — but it built the same underlying discipline I now apply to business systems.</p>
-          <p>Today I apply that discipline to business automation with the same sequence every time: understand the process, define the inputs and outputs, map the logic, connect the applications, handle the exceptions, and test the complete workflow before calling it done. In practice, that means mapping data through Make.com, adding error-catch branches for the steps that can fail, and using Gemini AI where AI-assisted classification, extraction, or information processing fits the workflow.</p>
+          <p>Today I apply that discipline to business automation with the same sequence every time: understand the process, define the inputs and outputs, map the logic, connect the applications, handle the exceptions, and test the complete workflow before calling it done. In practice, that means mapping data through Make.com, adding error-catch branches for the steps that can fail, and wiring Gemini AI into the process where a person used to make a judgment call manually.</p>
         </div>
       </div>
 
@@ -1678,7 +1678,7 @@ html.dark .chatbot-send{ color:#03121B; }
         <div class="resume-side reveal">
           <h3>Jefferson M. Garde</h3>
           <p class="resume-role">AI &amp; Workflow Automation Specialist</p>
-          <p class="resume-blurb">Building AI-assisted business workflows for lead management, scheduling, order processing, document extraction, notifications, and data synchronization—with a process-oriented background in automated production systems.</p>
+          <p class="resume-blurb">Background in process-driven, quality-controlled environments — now building Make.com and AI-assisted workflows designed to reduce manual admin work, minimize data-entry errors, and keep business systems in sync.</p>
 
           <div class="resume-highlights">
             <div class="resume-highlight">
@@ -1716,7 +1716,7 @@ html.dark .chatbot-send{ color:#03121B; }
       <img src="assets/resume/resume-preview-page1.png" alt="Full-size resume preview">
     </div>
     <div class="lb-caption">
-      <div class="lb-text">Resume preview — <a href="assets/resume/Jefferson_Garde_Resume.pdf" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:underline;">open the full PDF</a> to view or download.</div>
+      <div class="lb-text">Page 1 preview — <a href="assets/resume/Jefferson_Garde_Resume.pdf" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:underline;">open the full PDF</a> for page 2.</div>
     </div>
   </div>
 
@@ -1801,9 +1801,9 @@ html.dark .chatbot-send{ color:#03121B; }
               
               <div class="booking-details">
                 <div class="booking-meta">
-                  <span>⏱️ 30 min consultation</span>
-                  <span>📹 Google Meet</span>
-                  <span>🕒 Philippine Time (UTC+8)</span>
+                  <span>⏱️ 30 min appointment</span>
+                  <span>📹 Google Meet video call</span>
+                  <span>📍 Kayumangi, Lipa City, Batangas</span>
                 </div>
                 
                 <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3UMazeIW1yIy5vdzWaHQ3j7v89hS4xE8mdgHL5jOEgToK1U_5ziIFhfraCMIA6ncWlqfkM32Gt" 
@@ -2369,10 +2369,10 @@ html.dark .chatbot-send{ color:#03121B; }
       </div>
     </div>
     <div class="chatbot-suggestions" aria-label="Suggested questions">
-      <button type="button" class="chatbot-suggestion">What workflows can Jefferson automate?</button>
-      <button type="button" class="chatbot-suggestion">What automation tools does Jefferson use?</button>
-      <button type="button" class="chatbot-suggestion">Can Jefferson automate my current process?</button>
-      <button type="button" class="chatbot-suggestion">How can I discuss an automation project?</button>
+      <button type="button" class="chatbot-suggestion">What services does Jeff offer?</button>
+      <button type="button" class="chatbot-suggestion">What automation tools does Jeff use?</button>
+      <button type="button" class="chatbot-suggestion">How much does automation cost?</button>
+      <button type="button" class="chatbot-suggestion">Can I discuss a project with Jeff?</button>
     </div>
   </div>
 
@@ -2420,12 +2420,8 @@ html.dark .chatbot-send{ color:#03121B; }
   // widget falls back to a safe offline message instead
   // of breaking.
   // -------------------------------------------------
-  var CHATBOT_WEBHOOK_URL = "https://hook.eu1.make.com/oss76b8dyq7whrdfwuxo4l6zvnj9ndbc";
-  // Gemini can occasionally take longer than 30 seconds. Keep the request
-  // alive long enough for Make.com to return the completed assistant reply.
-  var REQUEST_TIMEOUT_MS = 120000;
-  var MAX_RETRY_ATTEMPTS = 2;
-  var RETRY_DELAYS_MS = [2000, 5000];
+  var CHATBOT_WEBHOOK_URL = "https://hook.eu1.make.com/p3vobovwgka8ovbnli7k3djohi9pg7m0";
+  var REQUEST_TIMEOUT_MS = 30000;
 
   // Persistent per-tab session id — required by the Make.com scenario's
   // Airtable "Search Records" step so each conversation gets its own row
@@ -2649,52 +2645,6 @@ html.dark .chatbot-send{ color:#03121B; }
     });
   }
 
-  function wait(ms) {
-    return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
-  }
-
-  function isRetryableStatus(status) {
-    return status === 429 || status === 500 || status === 502 ||
-      status === 503 || status === 504;
-  }
-
-  function requestChatbot(text, attempt) {
-    return fetchWithTimeout(
-      CHATBOT_WEBHOOK_URL,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: text,
-          sessionId: CHATBOT_SESSION_ID,
-          session_id: CHATBOT_SESSION_ID,
-          sender_name: '',
-          sender_email: '',
-          timestamp: new Date().toISOString(),
-          source: 'website-chatbot'
-        })
-      },
-      REQUEST_TIMEOUT_MS
-    ).then(function (res) {
-      if (!res.ok) {
-        if (isRetryableStatus(res.status) && attempt < MAX_RETRY_ATTEMPTS) {
-          var delay = RETRY_DELAYS_MS[attempt] || RETRY_DELAYS_MS[RETRY_DELAYS_MS.length - 1];
-          return res.text().catch(function () { return ''; }).then(function () {
-            return wait(delay).then(function () {
-              return requestChatbot(text, attempt + 1);
-            });
-          });
-        }
-        var requestError = new Error('Request failed with status ' + res.status);
-        requestError.status = res.status;
-        throw requestError;
-      }
-      var contentType = res.headers.get('content-type') || '';
-      if (contentType.indexOf('application/json') !== -1) return res.json();
-      return res.text().then(function (responseText) { return { reply: responseText }; });
-    });
-  }
-
   // ---------- Submit handling ----------
   function handleSubmit(e) {
     if (e) e.preventDefault();
@@ -2736,7 +2686,29 @@ html.dark .chatbot-send{ color:#03121B; }
       return;
     }
 
-    requestChatbot(text, 0)
+    fetchWithTimeout(
+      CHATBOT_WEBHOOK_URL,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          sessionId: CHATBOT_SESSION_ID,
+          session_id: CHATBOT_SESSION_ID,
+          sender_name: '',
+          sender_email: '',
+          timestamp: new Date().toISOString(),
+          source: 'website-chatbot'
+        })
+      },
+      REQUEST_TIMEOUT_MS
+    )
+      .then(function (res) {
+        if (!res.ok) throw new Error('Request failed with status ' + res.status);
+        var contentType = res.headers.get('content-type') || '';
+        if (contentType.indexOf('application/json') !== -1) return res.json();
+        return res.text().then(function (t) { return { reply: t }; });
+      })
       .then(function (data) {
         typingRow.remove();
         var reply =
@@ -2744,23 +2716,12 @@ html.dark .chatbot-send{ color:#03121B; }
           "Sorry, I didn't get a proper response. Please try again.";
         appendMessage(reply, 'bot');
       })
-      .catch(function (err) {
+      .catch(function () {
         typingRow.remove();
-        var timedOut = err && (err.name === 'AbortError' || err.name === 'TimeoutError');
-        var serviceBusy = err && isRetryableStatus(err.status);
-        appendError(serviceBusy
-          ? "The AI assistant is temporarily busy. Please try again in a moment."
-          : timedOut
-            ? "The assistant is taking longer than expected. Please try again in a moment."
-            : "Sorry, I couldn't reach the assistant right now. Please try again in a moment, or use the contact form to reach me directly."
+        appendError(
+          "Sorry, I couldn't reach the assistant right now. Please try again in a moment, or use the contact form to reach me directly."
         );
-        showError(serviceBusy
-          ? 'Gemini is temporarily unavailable — automatic retries were unsuccessful.'
-          : timedOut
-            ? 'Request timed out — Gemini did not respond within 2 minutes.'
-            : 'Connection issue — message not delivered.'
-        );
-        if (window.console && console.error) console.error('Chatbot request failed:', err);
+        showError('Connection issue — message not delivered.');
       })
       .finally(function () {
         finishSend();
