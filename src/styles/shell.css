@@ -2,8 +2,8 @@
    SHELL - the fixed viewport layout
    From 1100px up the page itself never scrolls: `.shell` is exactly one
    viewport tall with overflow hidden, the rail is a flex column inside it,
-   and only `#main-content` scrolls. Home is the one view sized to fit that
-   box exactly, so it does not scroll at all.
+   and only `#main-content` scrolls. Home is sized to fit that box exactly;
+   content that exceeds the box can still scroll on short viewports.
 
    Consequence worth remembering: every scroll read has to go through
    `#main-content`, never the window. Lenis is constructed with
@@ -49,8 +49,8 @@
     border-radius: var(--radius-pill);
   }
 
-  /* Home opts out of scrolling entirely: it is laid out to the panel box. */
-  .shell__panel[data-fixed='true'] { overflow: hidden; }
+  /* Keep the same viewport layout, but allow wheel/touch access to overflow
+     on short screens or when content grows. The panel owns page scrolling. */
 }
 
 /* ---------- Scrolling views ----------

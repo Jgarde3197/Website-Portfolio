@@ -77,7 +77,7 @@ export default function ProjectsGrid() {
   }, [])
   const visible = projects.filter((p) => filter === 'All' || p.platform === filter)
   return (
-    <section className="pgrid" aria-labelledby="projects-title">
+    <section className="pgrid pgrid--projects" aria-labelledby="projects-title">
       <header className="pgrid__head">
         <span className="pgrid__eyebrow">Portfolio projects</span>
         <h1 className="pgrid__title" id="projects-title">
