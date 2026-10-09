@@ -1,0 +1,22 @@
+.resume-thumbnail { display:block; width:100%; max-width:350px; padding:0; border:0; background:none; cursor:zoom-in; }
+.resume-thumbnail .portfolio-resume { display:block; transition:transform 200ms ease; }
+.resume-thumbnail:hover .portfolio-resume { transform:scale(1.01); }
+.resume-thumbnail:focus-visible { outline:2px solid var(--orange-ink); outline-offset:4px; border-radius:16px; }
+.resume-preview { position:fixed; inset:0; width:100vw; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0; background:transparent; color:#f4f4ed; overflow:hidden; }
+.resume-preview[open] { display:grid; place-items:center; }
+.resume-preview::backdrop { background:rgba(3,7,18,.88); backdrop-filter:blur(6px); }
+.resume-preview__panel { width:min(90vw,1100px); height:88dvh; display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:12px; min-height:0; }
+.resume-preview__header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.resume-preview__header h2 { margin:0; font-size:14px; font-weight:500; color:#cbd5e1; }
+.resume-preview__header button { min-width:44px; min-height:44px; padding:0; font:inherit; font-size:26px; line-height:1; cursor:pointer; background:#111827; color:#f4f4ed; border:1px solid rgba(148,163,184,.3); border-radius:10px; }
+.resume-preview__header button:focus-visible,.resume-preview__download:focus-visible { outline:2px solid var(--orange-ink); outline-offset:3px; }
+.resume-preview__image { min-height:0; overflow:auto; overscroll-behavior:contain; display:flex; justify-content:center; align-items:center; }
+.resume-preview__image img { display:block; width:auto; height:auto; max-width:100%; max-height:100%; object-fit:contain; }
+.resume-preview__download { justify-self:center; min-height:44px; display:flex; align-items:center; font-size:14px; }
+@media(max-width:1099px) {
+  .resume-preview__panel { width:calc(100vw - 20px); height:calc(100dvh - 20px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)); }
+  .resume-preview__image { display:block; }
+  .resume-preview__image img { width:100%; max-height:none; height:auto; }
+}
+@media(prefers-reduced-motion:reduce) { .resume-thumbnail .portfolio-resume { transition:none; transform:none; } }
+html[data-a11y-motion='true'] .resume-thumbnail .portfolio-resume { transition:none; transform:none; }
