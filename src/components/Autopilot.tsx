@@ -227,11 +227,14 @@ export default function Autopilot({ compact = false, maxScale = 1 }: AutopilotPr
 
         if (link.label) {
           const t = document.createElementNS(SVGNS, 'text')
-          const lx = (geo.p1.x + geo.p2.x) / 2
-          const ly = kind === 'loop' ? Math.max(geo.p1.y, geo.p2.y) + 25 : (geo.p1.y + geo.p2.y) / 2 - 10
+          // Follow the actual Error curve near its destination, in SVG design
+          // units, so the label stays with this branch at every canvas scale.
+          const errorPoint = link.to === 'error' ? path.getPointAtLength(path.getTotalLength() * 0.9) : null
+          const lx = errorPoint ? errorPoint.x - 10 : (geo.p1.x + geo.p2.x) / 2
+          const ly = errorPoint ? errorPoint.y : kind === 'loop' ? Math.max(geo.p1.y, geo.p2.y) + 25 : (geo.p1.y + geo.p2.y) / 2 - 10
           t.setAttribute('x', String(lx))
           t.setAttribute('y', String(ly))
-          t.setAttribute('text-anchor', 'middle')
+          t.setAttribute('text-anchor', errorPoint ? 'end' : 'middle')
           t.style.fill = 'var(--ap-loop)'
           t.setAttribute('font-size', '10.5')
           t.setAttribute('font-weight', '600')

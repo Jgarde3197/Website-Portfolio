@@ -70,15 +70,18 @@ export function useLenis() {
       gsap.registerPlugin(ScrollTrigger)
       applyShellScroller(ScrollTrigger)
 
-      // Below 1100px the shell dissolves and the document scrolls again, so
-      // the wrapper is only handed over when the panel is actually the
-      // scroller. Passing a non-scrolling wrapper freezes the page.
+      // This effect only runs while the desktop panel owns page scrolling.
+      // Keep its content reference stable across route/Suspense replacement.
       const panel = getScroller()
-      const usesPanel = !!panel && window.innerWidth >= 1100
-      const content = panel?.firstElementChild as HTMLElement | undefined
+      if (!panel) return
 
       const lenis = new Lenis({
-        ...(usesPanel && content ? { wrapper: panel, content } : {}),
+        // The route child is replaced by Suspense/navigation. Observe the
+        // persistent panel and read live limits, including late-loaded content.
+        wrapper: panel,
+        content: panel,
+        naiveDimensions: true,
+        allowNestedScroll: true,
         // Shorter duration + steeper exponential easing makes the wheel feel
         // responsive instead of heavy. 1.1s read as "the page is sluggish".
         // 0.9s with a steeper curve still smooths native step jumps but
@@ -131,6 +134,7 @@ export function useLenis() {
         document.removeEventListener('click', onAnchorClick)
         gsap.ticker.remove(tick)
         lenis.destroy()
+        applyShellScroller(ScrollTrigger)
       }
     })()
 

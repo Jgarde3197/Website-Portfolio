@@ -10,12 +10,11 @@ type ST = { defaults: (config: Record<string, unknown>) => unknown }
  * pins fire at the wrong time or not at all. Every place that imports
  * ScrollTrigger has to call this BEFORE creating its first trigger.
  *
- * Below the breakpoint the shell dissolves and the document scrolls again, so
- * the default is left alone.
+ * Below the breakpoint the shell dissolves and the document scrolls again,
+ * so reset the default to window when the desktop integration is cleaned up.
  */
 export function applyShellScroller(ScrollTrigger: ST) {
   if (typeof window === 'undefined') return
-  if (window.innerWidth < 1100) return
   const scroller = document.getElementById(SCROLLER_ID)
-  if (scroller) ScrollTrigger.defaults({ scroller })
+  ScrollTrigger.defaults({ scroller: window.innerWidth >= 1100 && scroller ? scroller : window })
 }

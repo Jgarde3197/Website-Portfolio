@@ -74,7 +74,7 @@ export default function AutomationAssistant() {
     finally { inFlight.current = false; setPending(false) }
   }
 
-  return <div className="automation-chat" hidden={blocked} style={{ '--chat-keyboard-bottom': `${keyboard.bottom}px`, '--chat-visible-height': keyboard.height ? `${keyboard.height}px` : '100dvh' } as React.CSSProperties}>
+  return <div className="automation-chat" hidden={blocked} data-compact-viewport={keyboard.height > 0 && keyboard.height < 440 ? 'true' : undefined} style={{ '--chat-keyboard-bottom': `${keyboard.bottom}px`, '--chat-visible-height': keyboard.height ? `${keyboard.height}px` : '100dvh' } as React.CSSProperties}>
     {open && <section id={panelId} className="automation-chat__panel" role="dialog" aria-modal="false" aria-labelledby={titleId} data-lenis-prevent
       onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); close() } }}>
       <header className="automation-chat__header">
@@ -89,11 +89,16 @@ export default function AutomationAssistant() {
       </div>
       <form className="automation-chat__form" onSubmit={event => { event.preventDefault(); void send() }}>
         <div className="automation-chat__composer">
-          <textarea ref={inputRef} value={input} onChange={event => setInput(event.target.value)} rows={2} maxLength={CHAT_MAX_LENGTH} placeholder="Ask about automation..." aria-label="Message to automation assistant"
+          <textarea ref={inputRef} value={input} onChange={event => setInput(event.target.value)} rows={2} maxLength={CHAT_MAX_LENGTH} enterKeyHint="send" placeholder="Ask about automation..." aria-label="Message to automation assistant"
             onKeyDown={event => {
               if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void send() }
             }} />
-          <button type="submit" aria-label="Send message" disabled={pending || !input.trim()}><PaperPlaneTilt size={20} aria-hidden="true" /></button>
+          <button type="submit" aria-label="Send message" disabled={pending || !input.trim()}
+            onPointerDown={event => {
+              // Keep the keyboard open until the normal click/form submit.
+              // Blurring here can move the fixed button between touch-down/up.
+              if (event.pointerType !== 'mouse' && document.activeElement === inputRef.current) event.preventDefault()
+            }}><PaperPlaneTilt size={20} aria-hidden="true" /></button>
         </div>
         <p>Please don't share passwords, API keys, or sensitive account information.</p>
       </form>
