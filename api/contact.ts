@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL } from '../src/data/contact-info.ts'
+import { CONTACT_EMAIL } from '../shared/contact-info.mjs'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 // Vercel parses JSON requests before invoking this function.

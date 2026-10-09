@@ -11,6 +11,11 @@ export default tseslint.config(
   // app source.
   { ignores: ['dist', 'node_modules', 'scripts', 'public'] },
   {
+    files: ['shared/**/*.mjs'],
+    ...js.configs.recommended,
+    languageOptions: { ecmaVersion: 2022, sourceType: 'module' },
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     languageOptions: {

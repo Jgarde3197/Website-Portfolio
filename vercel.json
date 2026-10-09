@@ -1,1 +1,10 @@
-{"rewrites":[{"source":"/((?!api/).*)","destination":"/index.html"}]}
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/*.ts": {
+      "includeFiles": "shared/*.mjs",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+}

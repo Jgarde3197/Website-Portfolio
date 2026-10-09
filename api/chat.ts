@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
-import { CHAT_ERROR, CHAT_MAX_LENGTH, normalizeChatResponse } from '../src/lib/chat-response.ts'
+import { CHAT_ERROR, CHAT_MAX_LENGTH, normalizeChatResponse } from '../shared/chat-response.mjs'
 
 // Best-effort per-instance protection. Use a shared rate-limit store/WAF when
 // deploying across serverless instances; no conversation context lives here.

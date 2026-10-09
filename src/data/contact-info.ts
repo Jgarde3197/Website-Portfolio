@@ -1,1 +1,1 @@
-export const CONTACT_EMAIL = 'jeffgarde001@gmail.com'
+export { CONTACT_EMAIL } from '../../shared/contact-info.mjs'

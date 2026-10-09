@@ -2,6 +2,8 @@
 
 ## Status
 
+Deployment follow-up: the shared adapter is now canonical in `shared/chat-response.mjs`, with `src/lib/chat-response.ts` retaining a typed re-export. Both APIs use packaged JavaScript utilities. See `VERCEL-API-FIX-REPORT.md` for local regression results. Vercel Preview/Production verification remains pending; the live results below describe the earlier local implementation test.
+
 The chatbot is configured locally with the supplied server-only webhook and verified with two successful live messages in a fresh anonymous session. Both replies appeared in the browser. The same session ID was reused. Make currently returns plain text, which the proxy normalizes to JSON. Airtable branch execution/record writes were not directly inspected because no execution-history or Airtable connector access was available. The contact-form webhook was not reused; the source archive excludes private environment files.
 
 ## 1. Files created and modified
