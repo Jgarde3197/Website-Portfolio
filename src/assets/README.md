@@ -1,0 +1,1 @@
+jefferson-profile.png is your transparent portrait. Replace it with a transparent PNG at the same path and rebuild. The current reference styling uses a square head-and-shoulders crop with object-fit:cover and top-centered positioning in the sidebar and About.
