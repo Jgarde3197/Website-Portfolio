@@ -8,13 +8,26 @@ const source = fs.readFileSync(new URL('../src/lib/contact.ts', import.meta.url)
   .replace("import { profile } from '@/data/profile'", "const profile = { email: 'test@example.com' }")
   .replaceAll('import.meta.env', '({ VITE_CONTACT_ENDPOINT: "/api/contact" })')
 const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
-const { submitLead, SubmitError } = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`)
+const { submitLead, SubmitError, readLead, validateLead } = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`)
 const originalFetch = globalThis.fetch
 const originalEndpoint = process.env.MAKE_CONTACT_WEBHOOK
 const lead = { firstName: 'Test', lastName: 'Person', email: 'test@example.com', service: 'Workflow Automation', message: 'Test message', website: '' }
 const payload = { name: 'Test Person', email: lead.email, service: lead.service, message: lead.message, website: '' }
 const response = () => ({ statusCode: 0, setHeader() {}, end(body) { this.body = JSON.parse(body) } })
 try {
+  const data = new FormData()
+  assert.deepEqual(Object.keys(validateLead(data)), ['firstName', 'email', 'message'])
+  data.set('firstName', '  Test  '); data.set('email', 'invalid'); data.set('message', 'A project question')
+  assert.match(validateLead(data).email, /valid email/)
+  assert.equal(readLead(data), null)
+  data.set('email', 'test@example.com')
+  assert.deepEqual(validateLead(data), {})
+  assert.equal(readLead(data).firstName, 'Test')
+  assert.equal(readLead(data).lastName, '', 'A surname must not block a valid name/email/message')
+  data.set('website', 'bot-filled')
+  assert.throws(() => readLead(data), SubmitError)
+  data.set('website', ''); data.set('message', '   ')
+  assert.match(validateLead(data).message, /message/)
   globalThis.fetch = async () => ({ ok: true, json: async () => { throw new SyntaxError('HTML fallback') } })
   await assert.rejects(submitLead(lead), SubmitError)
   globalThis.fetch = async () => ({ ok: true, json: async () => ({ received: true }) })
@@ -44,7 +57,7 @@ try {
   res = response(); await handler({ method: 'POST', body: payload }, res); assert.equal(res.statusCode, 502)
   delete process.env.MAKE_CONTACT_WEBHOOK
   res = response(); await handler({ method: 'POST', body: payload }, res); assert.equal(res.statusCode, 503)
-  console.log('PASS: confirmed success, false HTML success rejected, error reporting, validation, JSON parsing, size limit, upstream failures. No real requests sent.')
+  console.log('PASS: required-field/email validation, optional surname, honeypot rejection, confirmed success, false HTML success rejected, error reporting, JSON parsing, size limit, upstream failures. No real requests sent.')
 } finally {
   globalThis.fetch = originalFetch
   if (originalEndpoint === undefined) delete process.env.MAKE_CONTACT_WEBHOOK

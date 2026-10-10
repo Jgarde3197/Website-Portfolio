@@ -16,7 +16,8 @@ export default defineConfig({
   plugins: [react(), {
     name: 'portfolio-contact-api',
     configResolved(config) {
-      process.env.MAKE_CONTACT_WEBHOOK ||= loadEnv(config.mode, config.root, '').MAKE_CONTACT_WEBHOOK
+      const contactWebhook = loadEnv(config.mode, config.root, '').MAKE_CONTACT_WEBHOOK
+      if (!process.env.MAKE_CONTACT_WEBHOOK && contactWebhook) process.env.MAKE_CONTACT_WEBHOOK = contactWebhook
       process.env.MAKE_CHAT_WEBHOOK ||= loadEnv(config.mode, config.root, '').MAKE_CHAT_WEBHOOK
     },
     configureServer(server) { server.middlewares.use(contactMiddleware) },
