@@ -1,10 +1,14 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
   "functions": {
-    "api/*.ts": {
-      "includeFiles": "shared/*.mjs",
+    "api/contact.ts": {
+      "includeFiles": "shared/contact-info.mjs",
       "maxDuration": 30
     }
-  },
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  }
 }

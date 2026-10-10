@@ -18,9 +18,15 @@ export default async function handler(
     reply(405, 'Use the contact form to send a message.')
     return
   }
-  const endpoint = process.env.MAKE_CONTACT_WEBHOOK
-  if (!endpoint) {
+  const endpoint = process.env.MAKE_CONTACT_WEBHOOK?.trim()
+  if (!endpoint || endpoint === 'undefined') {
     reply(503, `Contact service is not configured. Email ${CONTACT_EMAIL} directly.`)
+    return
+  }
+  try {
+    if (new URL(endpoint).protocol !== 'https:') throw new Error('Invalid protocol')
+  } catch {
+    reply(503, 'Contact service configuration is invalid. Please email Jefferson directly.')
     return
   }
   let parsed = req.body
@@ -55,6 +61,7 @@ export default async function handler(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, service, message }),
       signal: AbortSignal.timeout(15000),
+      redirect: 'error',
     })
     if (!response.ok) {
       reply(
@@ -63,8 +70,34 @@ export default async function handler(
       )
       return
     }
+    // Make's default acknowledgement is plain text. Custom JSON responses
+    // must be valid and must not explicitly report a failure.
+    const contentType = response.headers.get('content-type') || ''
+    const acknowledgement = await response.text()
+    if (contentType.includes('text/html') || /^\s*<!?html/i.test(acknowledgement)) {
+      reply(502, 'The contact service returned an unexpected response. Please email Jefferson directly.')
+      return
+    }
+    if (contentType.includes('json')) {
+      let confirmation: unknown
+      try { confirmation = JSON.parse(acknowledgement) } catch {
+        reply(502, 'The contact service returned invalid JSON. Please email Jefferson directly.')
+        return
+      }
+      if (confirmation && typeof confirmation === 'object') {
+        const result = confirmation as Record<string, unknown>
+        if (result.ok === false || result.success === false || result.error) {
+          reply(502, 'The contact service could not accept your message. Please email Jefferson directly.')
+          return
+        }
+      }
+    }
     reply(200)
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) {
+      reply(504, 'The contact service timed out; acceptance could not be confirmed. Please email Jefferson directly.')
+      return
+    }
     reply(502, 'The contact service is unavailable. Please email Jefferson directly.')
   }
 }
