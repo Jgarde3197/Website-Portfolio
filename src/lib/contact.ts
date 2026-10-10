@@ -44,19 +44,38 @@ export type Lead = {
 }
 
 export type SubmitResult = { via: 'webhook' } | { via: 'mailto' }
+export type LeadField = 'firstName' | 'email' | 'message'
+export type LeadErrors = Partial<Record<LeadField, string>>
 
-/** Read, trim, cap and sanitise the four fields. Returns null if a required
- *  field is missing or the email does not look like one. */
-export function readLead(data: FormData): Lead | null {
+function readFields(data: FormData): Lead {
   const firstName = sanitize(String(data.get('firstName') ?? '').trim()).slice(0, MAX_NAME)
   const lastName = sanitize(String(data.get('lastName') ?? '').trim()).slice(0, MAX_NAME)
   const email = sanitize(String(data.get('email') ?? '').trim()).slice(0, MAX_EMAIL)
   const message = sanitize(String(data.get('message') ?? '').trim(), true).slice(0, MAX_MESSAGE)
-  if (!firstName || !lastName || !email || !message || !EMAIL_RE.test(email)) return null
   const website = String(data.get('website') ?? '')
-  if (website) throw new SubmitError('Unable to submit this message.')
   const service = sanitize(String(data.get('service') ?? 'Other / Inquiry')).slice(0, 80)
   return { firstName, lastName, email, message, website, service }
+}
+
+function fieldErrors(lead: Lead): LeadErrors {
+  const errors: LeadErrors = {}
+  if (!lead.firstName) errors.firstName = 'Enter your name.'
+  if (!lead.email) errors.email = 'Enter your email address.'
+  else if (!EMAIL_RE.test(lead.email)) errors.email = 'Enter a valid email address, such as name@example.com.'
+  if (!lead.message) errors.message = 'Enter a message about your project.'
+  return errors
+}
+
+export function validateLead(data: FormData): LeadErrors {
+  return fieldErrors(readFields(data))
+}
+
+/** Last name is optional; a name, valid email and message are required. */
+export function readLead(data: FormData): Lead | null {
+  const lead = readFields(data)
+  if (Object.keys(fieldErrors(lead)).length) return null
+  if (lead.website) throw new SubmitError('Unable to submit this message.')
+  return lead
 }
 
 export class SubmitError extends Error {}

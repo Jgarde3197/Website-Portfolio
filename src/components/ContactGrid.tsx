@@ -1,10 +1,10 @@
 import ToolLogo from './ToolLogo'
 import { services } from '@/data/services'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { PaperPlaneTilt, CheckCircle, WarningCircle, EnvelopeSimple, ArrowUpRight, CaretDown } from '@/components/slab'
 import { FAQS } from '@/data/faqs'
 import { profile, schedulingUrl } from '@/data/profile'
-import { readLead, submitLead, SubmitError, MAX_NAME, MAX_EMAIL, MAX_MESSAGE, type SubmitResult } from '@/lib/contact'
+import { readLead, validateLead, submitLead, SubmitError, MAX_NAME, MAX_EMAIL, MAX_MESSAGE, type LeadField, type LeadErrors } from '@/lib/contact'
 
 /**
  * ContactGrid - the Contact view as a fixed viewport.
@@ -15,11 +15,11 @@ import { readLead, submitLead, SubmitError, MAX_NAME, MAX_EMAIL, MAX_MESSAGE, ty
  * nothing here scrolls; the message box takes whatever height is left.
  *
  * Submission goes through lib/contact.ts, which is the one place a form
- * backend gets wired. Until it is, the same call opens the visitor's mail
- * client with the message laid out, and the success copy says so.
+ * backend gets wired. Missing server configuration is an error, not success.
+ * An explicitly empty frontend endpoint retains the existing mail-app handoff.
  */
 
-type Status = { kind: 'idle' } | { kind: 'sending' } | { kind: 'error'; note: string } | { kind: 'sent'; via: SubmitResult['via'] }
+type Status = { kind: 'idle' } | { kind: 'sending' } | { kind: 'error'; note: string } | { kind: 'sent' } | { kind: 'handoff' }
 
 /* The plane takes this long to leave the button. The sent state waits for it
    even when the submit itself is instant, so the send is something you see
@@ -30,6 +30,8 @@ const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
 
 export default function ContactGrid() {
   const [status, setStatus] = useState<Status>({ kind: 'idle' })
+  const [errors, setErrors] = useState<LeadErrors>({})
+  const inFlight = useRef(false)
   // Bumped on every failed submit so the shake replays even if the same
   // error is already showing.
   const [shake, setShake] = useState(0)
@@ -38,21 +40,35 @@ export default function ContactGrid() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const lead = readLead(new FormData(e.currentTarget))
-    if (!lead) {
-      setStatus({ kind: 'error', note: 'Add your name, a real email, and a short note.' })
+    if (inFlight.current) return
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const validation = validateLead(data)
+    setErrors(validation)
+    const firstInvalid = Object.keys(validation)[0] as LeadField | undefined
+    if (firstInvalid) {
+      setStatus({ kind: 'error', note: 'Please check the highlighted fields.' })
       setShake((n) => n + 1)
+      const invalidInput = form.elements.namedItem(firstInvalid) as HTMLInputElement | HTMLTextAreaElement | null
+      invalidInput?.focus()
       return
     }
-    setStatus({ kind: 'sending' })
     try {
+      // readLead can reject the honeypot; keep it inside the handled error path.
+      const lead = readLead(data)
+      if (!lead) throw new SubmitError('Please check your contact details.')
+      inFlight.current = true
+      setStatus({ kind: 'sending' })
       const [result] = await Promise.all([submitLead(lead), wait(FLIGHT_MS)])
-      setStatus({ kind: 'sent', via: result.via })
+      if (result.via === 'webhook') {
+        form.reset()
+        setStatus({ kind: 'sent' })
+      } else setStatus({ kind: 'handoff' })
     } catch (err) {
       const note = err instanceof SubmitError ? err.message : 'That did not go through. Email me directly instead.'
       setStatus({ kind: 'error', note })
       setShake((n) => n + 1)
-    }
+    } finally { inFlight.current = false }
   }
 
   const busy = status.kind === 'sending'
@@ -130,20 +146,16 @@ export default function ContactGrid() {
               <span className="cgrid__done-mark" aria-hidden="true">
                 <CheckCircle size={30} weight="fill" />
               </span>
-              <h2 className="cgrid__done-title">
-                {status.via === 'webhook' ? 'Got it.' : 'Your mail app has it.'}
-              </h2>
+              <h2 className="cgrid__done-title">Got it.</h2>
               <p className="cgrid__done-body">
-                {status.via === 'webhook'
-                  ? 'Your message was accepted by the contact service.'
-                  : 'Your message is addressed to Jefferson. Press send in your mail app to deliver it.'}
+                Your message was accepted by the contact service.
               </p>
               <button type="button" className="cgrid__again" onClick={() => setStatus({ kind: 'idle' })}>
                 Write another
               </button>
             </div>
           ) : (
-            <form className={`cgrid__form${busy ? ' is-sending' : ''}`} onSubmit={onSubmit} noValidate>
+            <form className={`cgrid__form${busy ? ' is-sending' : ''}`} onSubmit={onSubmit} noValidate aria-busy={busy}>
               {/* Honeypot. Hidden from people and assistive tech; a script that
                   fills every field trips it and the backend can drop the
                   post. autoComplete off so a browser never fills it either. */}
@@ -158,31 +170,37 @@ export default function ContactGrid() {
               <div className="cgrid__row">
                 <label className="cgrid__field">
                   <span className="cgrid__label">First name</span>
-                  <input type="text" name="firstName" autoComplete="given-name" required maxLength={MAX_NAME} placeholder="First name" />
+                  <input type="text" name="firstName" autoComplete="given-name" required maxLength={MAX_NAME} placeholder="First name" readOnly={busy} aria-invalid={!!errors.firstName} aria-describedby={errors.firstName ? 'contact-name-error' : undefined} />
+                  {errors.firstName && <span className="cgrid__field-error" id="contact-name-error">{errors.firstName}</span>}
                 </label>
                 <label className="cgrid__field">
-                  <span className="cgrid__label">Last name</span>
-                  <input type="text" name="lastName" autoComplete="family-name" required maxLength={MAX_NAME} placeholder="Last name" />
+                  <span className="cgrid__label">Last name (optional)</span>
+                  <input type="text" name="lastName" autoComplete="family-name" maxLength={MAX_NAME} placeholder="Last name" readOnly={busy} />
                 </label>
               </div>
 
               <label className="cgrid__field">
                 <span className="cgrid__label">Email</span>
-                <input type="email" name="email" autoComplete="email" required maxLength={MAX_EMAIL} placeholder="you@yourbusiness.com" />
+                <input type="email" name="email" autoComplete="email" required maxLength={MAX_EMAIL} placeholder="you@yourbusiness.com" readOnly={busy} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
+                {errors.email && <span className="cgrid__field-error" id="contact-email-error">{errors.email}</span>}
               </label>
 
               <label className="cgrid__field">
                 <span className="cgrid__label">Service needed</span>
-                <select name="service">{services.map(service => <option key={service.title}>{service.title}</option>)}<option>Other / Inquiry</option></select>
+                <select name="service" disabled={busy}>{services.map(service => <option key={service.title}>{service.title}</option>)}<option>Other / Inquiry</option></select>
               </label>
               <label className="cgrid__field cgrid__field--grow">
                 <span className="cgrid__label">Tell me more about your business</span>
                 <textarea
                   name="message"
                   required
+                  readOnly={busy}
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? 'contact-message-error' : undefined}
                   maxLength={MAX_MESSAGE}
                   placeholder="What do you need help with? What are you working with today?"
                 />
+                {errors.message && <span className="cgrid__field-error" id="contact-message-error">{errors.message}</span>}
               </label>
 
               <div className="cgrid__actions">
@@ -195,7 +213,7 @@ export default function ContactGrid() {
                   <span className="cgrid__submit-plane" aria-hidden="true">
                     <PaperPlaneTilt size={17} weight="fill" />
                   </span>
-                  <span className="cgrid__submit-label">{busy ? 'Sending' : 'Send message'}</span>
+                  <span className="cgrid__submit-label">{busy ? 'Sending...' : 'Send message'}</span>
                   <ArrowUpRight className="cgrid__submit-arrow" size={15} weight="bold" aria-hidden="true" />
                 </button>
                 {status.kind === 'error' ? (
@@ -203,6 +221,8 @@ export default function ContactGrid() {
                     <WarningCircle size={16} weight="fill" aria-hidden="true" />
                     {status.note}
                   </span>
+                ) : status.kind === 'handoff' ? (
+                  <span className="cgrid__hint" role="status">Your mail app has the draft. Press send there to deliver it.</span>
                 ) : (
                   <span className="cgrid__hint">Or email Jefferson directly.</span>
                 )}

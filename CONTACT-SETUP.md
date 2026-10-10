@@ -4,7 +4,7 @@ The form posts JSON to `/api/contact`. This server endpoint validates the messag
 
 ## Local use
 
-Use Node 24 (or Node 22.19+). Copy `.env.example` to `.env.local`. Set `MAKE_CONTACT_WEBHOOK` to your supplied Make URL; keep `VITE_CONTACT_ENDPOINT=/api/contact`. This computer is already configured in the untracked `.env.local`.
+Use Node 24 (or Node 22.19+). Copy `.env.example` to `.env.local`. Set `MAKE_CONTACT_WEBHOOK` to your separate contact Make URL; keep `VITE_CONTACT_ENDPOINT=/api/contact`. Private environment files are excluded from the distributable ZIP, so configure this value in your own environment. Do not reuse the chatbot webhook.
 
 Run `npm install`, `npm run build`, then `npm run serve` for http://127.0.0.1:5183. Development and Vite preview also mount the same API handler. The Node scripts use the operating system's trusted certificates, with TLS verification enabled.
 

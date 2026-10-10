@@ -6,6 +6,7 @@ import { tools, toolCategories } from '@/data/tools'
 import ToolLogo from './ToolLogo'
 import ProfileImage from './ProfileImage'
 import Certifications from './Certifications'
+import AboutIntroductionVideo from './AboutIntroductionVideo'
 import { education, training } from '@/data/experience'
 export default function AboutGrid() {
   const [resumeOpen, setResumeOpen] = useState(false)
@@ -61,6 +62,7 @@ export default function AboutGrid() {
             </p>
           </div>
         </div>
+        <AboutIntroductionVideo />
         <div className="portfolio-columns">
           <section><h2>Education</h2><h3>{education.institution}</h3><p>{education.program} · {education.dates}</p></section>
           <section><h2>Technical training</h2><ul>{training.map(t => <li key={t}>{t}</li>)}</ul></section>

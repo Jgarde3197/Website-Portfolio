@@ -7,7 +7,8 @@ import contact from '../api/contact.ts'
 import chat from '../api/chat.ts'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-process.env.MAKE_CONTACT_WEBHOOK ||= loadEnv('production', root, '').MAKE_CONTACT_WEBHOOK
+const contactWebhook = loadEnv('production', root, '').MAKE_CONTACT_WEBHOOK
+if (!process.env.MAKE_CONTACT_WEBHOOK && contactWebhook) process.env.MAKE_CONTACT_WEBHOOK = contactWebhook
 process.env.MAKE_CHAT_WEBHOOK ||= loadEnv('production', root, '').MAKE_CHAT_WEBHOOK
 const dist = path.join(root, 'dist')
 const mime = { '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.pdf': 'application/pdf', '.woff': 'font/woff', '.woff2': 'font/woff2', '.html': 'text/html' }
